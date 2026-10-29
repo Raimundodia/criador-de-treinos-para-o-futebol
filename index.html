@@ -94,17 +94,17 @@ tailwind.config = {
     </div>
 
     <div class="space-y-2.5 relative z-10">
-      <button onclick="handleLogin()" id="btn-login" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
+      <button type="button" onclick="handleLogin()" id="btn-login" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
         <i class="fa-solid fa-right-to-bracket"></i> Acessar Painel do Treinador
       </button>
-      <button onclick="handleSignUp()" id="btn-signup" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition-all uppercase tracking-wider cursor-pointer">
+      <button type="button" onclick="handleSignUp()" id="btn-signup" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition-all uppercase tracking-wider cursor-pointer">
         Cadastrar Nova Conta
       </button>
     </div>
 
     <div class="flex justify-between items-center text-[10px] text-slate-500 pt-3 border-t border-slate-800 relative z-10">
       <span><i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> Supabase Auth</span>
-      <button onclick="forceShowSettingsFromAuth()" class="text-emerald-400 hover:underline font-semibold cursor-pointer">Configurar Supabase</button>
+      <button type="button" onclick="forceShowSettingsFromAuth()" class="text-emerald-400 hover:underline font-semibold cursor-pointer">Configurar Supabase</button>
     </div>
   </div>
 </div>
@@ -261,7 +261,7 @@ tailwind.config = {
           <input type="text" id="ai-custom-prompt" placeholder="Ex: Queima de linhas no corredor central com apoio de terceiro homem..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
         </div>
 
-        <button id="btn-run-ai" onclick="generateProSession()" class="w-full py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-xl shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-widest cursor-pointer">
+        <button type="button" id="btn-run-ai" onclick="generateProSession()" class="w-full py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-xl shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-widest cursor-pointer">
           <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Sessão Completa Hiperestruturada
         </button>
       </div>
@@ -284,22 +284,22 @@ tailwind.config = {
               <option value="full">Campo Inteiro</option>
               <option value="half">Meio Campo</option>
             </select>
-            <button onclick="setBoardTool('blue_player')" class="tool-btn bg-sky-600 hover:bg-sky-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="setBoardTool('blue_player')" class="tool-btn bg-sky-600 hover:bg-sky-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-user"></i> Ataque (Azul)
             </button>
-            <button onclick="setBoardTool('red_player')" class="tool-btn bg-rose-600 hover:bg-rose-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="setBoardTool('red_player')" class="tool-btn bg-rose-600 hover:bg-rose-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-user"></i> Defesa (Vermelho)
             </button>
-            <button onclick="setBoardTool('yellow_player')" class="tool-btn bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="setBoardTool('yellow_player')" class="tool-btn bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-user"></i> Coringa
             </button>
-            <button onclick="setBoardTool('ball')" class="tool-btn bg-white hover:bg-slate-200 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="setBoardTool('ball')" class="tool-btn bg-white hover:bg-slate-200 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-futbol"></i> Bola
             </button>
-            <button onclick="setBoardTool('line')" class="tool-btn bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="setBoardTool('line')" class="tool-btn bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-route"></i> Seta Passe
             </button>
-            <button onclick="clearBoard()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 font-bold px-3 py-1.5 rounded-xl text-xs border border-rose-800/60 cursor-pointer">
+            <button type="button" onclick="clearBoard()" class="bg-rose-950 hover:bg-rose-900 text-rose-300 font-bold px-3 py-1.5 rounded-xl text-xs border border-rose-800/60 cursor-pointer">
               <i class="fa-solid fa-eraser"></i> Limpar
             </button>
           </div>
@@ -311,7 +311,7 @@ tailwind.config = {
 
         <div class="flex justify-between items-center text-xs text-slate-400 pt-1">
           <span>Toque no relvado para posicionar elementos ou traçar movimentações táticas.</span>
-          <button onclick="saveBoardToLibrary()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs flex items-center gap-2 uppercase tracking-wider cursor-pointer">
+          <button type="button" onclick="saveBoardToLibrary()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs flex items-center gap-2 uppercase tracking-wider cursor-pointer">
             <i class="fa-solid fa-floppy-disk"></i> Salvar na Biblioteca
           </button>
         </div>
@@ -325,7 +325,7 @@ tailwind.config = {
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
           <input type="text" id="library-search" oninput="filterLibrary()" placeholder="Pesquisar por título, objetivo ou momento de jogo..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
         </div>
-        <button onclick="openNewExerciseModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shrink-0 uppercase tracking-wider cursor-pointer">
+        <button type="button" onclick="openNewExerciseModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shrink-0 uppercase tracking-wider cursor-pointer">
           <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Criar Exercício</span>
         </button>
       </div>
@@ -361,10 +361,10 @@ tailwind.config = {
         </div>
         <div id="cart-items-container" class="space-y-2.5"></div>
         <div class="pt-4 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button onclick="exportToPDF()" class="py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
+          <button type="button" onclick="exportToPDF()" class="py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
             <i class="fa-solid fa-file-pdf text-rose-400 text-sm"></i> Exportar Relatório PDF
           </button>
-          <button onclick="shareWhatsApp()" class="py-3 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 font-bold text-xs rounded-xl border border-emerald-500/40 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
+          <button type="button" onclick="shareWhatsApp()" class="py-3 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 font-bold text-xs rounded-xl border border-emerald-500/40 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
             <i class="fa-brands fa-whatsapp text-emerald-400 text-base"></i> Enviar Ficha WhatsApp
           </button>
         </div>
@@ -376,4 +376,737 @@ tailwind.config = {
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
         <div class="border-b border-slate-800 pb-3">
           <h2 class="font-black text-base text-white flex items-center gap-2 font-display uppercase">
-            <i class="
+            <i class="fa-solid fa-database text-emerald-400"></i> Credenciais do Supabase
+          </h2>
+          <p class="text-xs text-slate-400">Insira a URL e a Chave Pública (Anon) para sincronização</p>
+        </div>
+        <div class="space-y-3.5 text-xs">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1 uppercase">Supabase URL</label>
+            <input type="text" id="cfg-url" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500 font-mono">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1 uppercase">Supabase Anon Key (JWT)</label>
+            <textarea id="cfg-key" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500 font-mono text-[11px]"></textarea>
+          </div>
+          <button type="button" onclick="saveSupabaseConfig()" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar e Atualizar Sistema
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MOBILE NAVIGATION BAR -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 border-t border-slate-800 px-3 py-2.5 flex justify-around z-40 backdrop-blur-md">
+    <button type="button" onclick="switchTab('dashboard')" class="tab-btn-mb flex flex-col items-center gap-1 text-emerald-400 cursor-pointer" data-tab="dashboard">
+      <i class="fa-solid fa-chart-pie text-lg"></i>
+      <span class="text-[9px] font-extrabold uppercase">Dash</span>
+    </button>
+    <button type="button" onclick="switchTab('ai-generator')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400 cursor-pointer" data-tab="ai-generator">
+      <i class="fa-solid fa-wand-magic-sparkles text-lg text-amber-400"></i>
+      <span class="text-[9px] font-extrabold uppercase">Gerador</span>
+    </button>
+    <button type="button" onclick="switchTab('tactical-board')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400 cursor-pointer" data-tab="tactical-board">
+      <i class="fa-solid fa-chalkboard-user text-lg text-emerald-400"></i>
+      <span class="text-[9px] font-extrabold uppercase">Prancheta</span>
+    </button>
+    <button type="button" onclick="switchTab('library')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400 cursor-pointer" data-tab="library">
+      <i class="fa-solid fa-layer-group text-lg"></i>
+      <span class="text-[9px] font-extrabold uppercase">Treinos</span>
+    </button>
+    <button type="button" onclick="switchTab('cart')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400 cursor-pointer" data-tab="cart">
+      <i class="fa-solid fa-file-pen text-lg text-amber-400"></i>
+      <span class="text-[9px] font-extrabold uppercase">Ficha</span>
+    </button>
+  </nav>
+
+  <!-- MODAL NOVO EXERCÍCIO -->
+  <div id="modal-new-exercise" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 space-y-4 relative">
+      <button type="button" onclick="closeNewExerciseModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white cursor-pointer">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-base font-black text-white font-display uppercase">Criar Exercício Metodológico</h3>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1 uppercase">Título do Exercício</label>
+          <input type="text" id="new-ex-title" placeholder="Ex: Jogo de Posição 4v4 + 3 Coringas" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1 uppercase">Duração</label>
+            <input type="text" id="new-ex-duration" placeholder="20 min" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1 uppercase">Dimensões do Espaço</label>
+            <input type="text" id="new-ex-space" placeholder="35x30m" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200">
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-300 mb-1 uppercase">Objetivo Tático & Regras de Provocação</label>
+          <textarea id="new-ex-objective" rows="3" placeholder="Descreva o foco cognitivo e regras..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200"></textarea>
+        </div>
+      </div>
+      <button type="button" onclick="saveManualExercise()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl uppercase tracking-wider cursor-pointer">
+        Guardar Exercício
+      </button>
+    </div>
+  </div>
+
+  <div id="printable-area" class="hidden p-8">
+    <h1 class="text-xl font-bold mb-2">COACH TACTICS PRO - RELATÓRIO DE SESSÃO TÁTICA</h1>
+    <p class="text-sm mb-4">Comissão Técnica | Metodologia UEFA Pro</p>
+    <div id="print-content" class="space-y-4 text-xs"></div>
+  </div>
+</div>
+
+<script>
+let supabaseUrl = localStorage.getItem('sb_url') || 'https://hpqnzffsjsbrphbhugye.supabase.co';
+let supabaseKey = localStorage.getItem('sb_key') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwcW56ZmZzanNicnBoYmh1g3llIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDA1MDgsImV4cCI6MjEwODgxNjUwOH0.V2jz8Gp2MMg8OaRZ4Ikw3-dcV1g68AOMDEN-FvTa540';
+let supabaseClient = null;
+
+try {
+  if (window.supabase && supabaseUrl && supabaseKey) {
+    supabaseClient = window.supabase.createClient(supabaseUrl.trim(), supabaseKey.trim());
+  }
+} catch(e) {
+  console.error("Erro ao iniciar Supabase:", e);
+}
+
+let state = {
+  exercises: JSON.parse(localStorage.getItem('ct_exercises')) || [],
+  cart: JSON.parse(localStorage.getItem('ct_cart')) || [],
+  currentUser: null
+};
+
+async function handleLogin() {
+  const emailInput = document.getElementById('auth-email');
+  const passInput = document.getElementById('auth-password');
+  const errEl = document.getElementById('auth-error');
+  const btn = document.getElementById('btn-login');
+  
+  if (!emailInput || !passInput) {
+    alert('Erro de elementos na tela.');
+    return;
+  }
+
+  const email = emailInput.value.trim();
+  const pass = passInput.value.trim();
+  
+  errEl.classList.add('hidden');
+  if (!email || !pass) {
+    errEl.innerText = 'Por favor, preencha o e-mail e a palavra-passe.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  if (!supabaseClient) {
+    errEl.innerText = 'Erro: Supabase não conectado. Verifique suas credenciais nas configurações.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> A autenticar...';
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+    if (error) {
+      errEl.innerText = error.message;
+      errEl.classList.remove('hidden');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Acessar Painel do Treinador';
+    } else {
+      location.reload();
+    }
+  } catch(err) {
+    errEl.innerText = 'Erro de conexão com o servidor de autenticação.';
+    errEl.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Acessar Painel do Treinador';
+  }
+}
+
+async function handleSignUp() {
+  const emailInput = document.getElementById('auth-email');
+  const passInput = document.getElementById('auth-password');
+  const errEl = document.getElementById('auth-error');
+  const btn = document.getElementById('btn-signup');
+  
+  if (!emailInput || !passInput) {
+    alert('Erro de elementos na tela.');
+    return;
+  }
+
+  const email = emailInput.value.trim();
+  const pass = passInput.value.trim();
+  
+  errEl.classList.add('hidden');
+  if (!email || !pass) {
+    errEl.innerText = 'Insira um e-mail e uma palavra-passe válida (mínimo 6 caracteres).';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  if (!supabaseClient) {
+    errEl.innerText = 'Erro: Supabase não conectado. Verifique suas credenciais nas configurações.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> A criar conta...';
+
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({ email, password: pass });
+    if (error) {
+      errEl.innerText = error.message;
+      errEl.classList.remove('hidden');
+      btn.disabled = false;
+      btn.innerHTML = 'Cadastrar Nova Conta';
+    } else {
+      alert('Conta criada com sucesso! Faça login com os seus dados agora.');
+      btn.disabled = false;
+      btn.innerHTML = 'Cadastrar Nova Conta';
+    }
+  } catch(err) {
+    errEl.innerText = 'Erro ao registar nova conta.';
+    errEl.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = 'Cadastrar Nova Conta';
+  }
+}
+
+async function checkAuthSession() {
+  if (!supabaseClient) return;
+  try {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      state.currentUser = session.user;
+      document.getElementById('user-email-display').innerText = session.user.email;
+      document.getElementById('auth-modal').classList.add('hidden');
+      document.getElementById('app-container').classList.remove('hidden');
+      document.getElementById('app-container').classList.add('flex');
+      loadCloudExercises();
+    }
+  } catch(e) { console.log('Sessão offline', e); }
+}
+
+async function handleLogout() {
+  if (supabaseClient) await supabaseClient.auth.signOut();
+  location.reload();
+}
+
+function forceShowSettingsFromAuth() {
+  document.getElementById('auth-modal').classList.add('hidden');
+  document.getElementById('app-container').classList.remove('hidden');
+  document.getElementById('app-container').classList.add('flex');
+  switchTab('settings');
+}
+
+function saveSupabaseConfig() {
+  const url = document.getElementById('cfg-url').value.trim();
+  const key = document.getElementById('cfg-key').value.trim();
+  if (!url || !key) { alert('Preencha ambos os campos.'); return; }
+  localStorage.setItem('sb_url', url);
+  localStorage.setItem('sb_key', key);
+  alert('Credenciais salvas com sucesso!');
+  location.reload();
+}
+
+async function loadCloudExercises() {
+  if (!supabaseClient || !state.currentUser) return;
+  try {
+    const { data } = await supabaseClient
+      .from('treinos_coach')
+      .select('*')
+      .eq('user_email', state.currentUser.email);
+      
+    if (data && data.length > 0) {
+      state.exercises = data.map(item => ({
+        id: item.id,
+        title: item.titulo,
+        duration: item.duracao,
+        space: item.espaco,
+        phase: item.fase,
+        objective: item.objetivo,
+        rules: item.regras,
+        structure: item.estrutura || null
+      }));
+      renderLibrary();
+    }
+  } catch(e) { console.log('Erro ao carregar do Supabase', e); }
+}
+
+async function saveToCloud(ex) {
+  if (!supabaseClient || !state.currentUser) return;
+  try {
+    await supabaseClient.from('treinos_coach').insert([{
+      user_email: state.currentUser.email,
+      titulo: ex.title,
+      duracao: ex.duration,
+      espaco: ex.space,
+      fase: ex.phase || 'Geral',
+      objetivo: ex.objective,
+      regras: ex.rules || '',
+      estrutura: ex.structure || null
+    }]);
+  } catch(e) { console.log('Erro ao salvar no Supabase', e); }
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.getElementById('tab-' + tabId).classList.remove('hidden');
+  
+  document.querySelectorAll('.tab-btn-dk, .tab-btn-mb').forEach(btn => {
+    if (btn.dataset.tab === tabId) {
+      btn.classList.add('text-emerald-400');
+      btn.classList.remove('text-slate-400');
+    } else {
+      btn.classList.remove('text-emerald-400');
+      btn.classList.add('text-slate-400');
+    }
+  });
+
+  if (tabId === 'library') renderLibrary();
+  if (tabId === 'cart') renderCart();
+  if (tabId === 'tactical-board') initBoardCanvas();
+}
+
+function renderLibrary() {
+  const container = document.getElementById('library-container');
+  const search = document.getElementById('library-search').value.toLowerCase();
+  container.innerHTML = '';
+  
+  const filtered = state.exercises.filter(ex => 
+    ex.title.toLowerCase().includes(search) || 
+    ex.objective.toLowerCase().includes(search)
+  );
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="col-span-2 text-center py-8 text-slate-500 text-xs">Nenhum exercício cadastrado. Vá em "Gerador Pro" para criar novos.</div>';
+    return;
+  }
+
+  filtered.forEach(ex => {
+    const card = document.createElement('div');
+    card.className = 'card-tactics rounded-3xl p-5 space-y-3 relative hover:border-emerald-500/50 transition-all shadow-xl';
+    
+    let extraHTML = '';
+    if (ex.structure) {
+      extraHTML = `
+        <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-300 pt-1">
+          <div class="bg-slate-950/80 p-2 rounded-xl border border-slate-800">
+            <span class="text-slate-500 font-extrabold uppercase block">Estrutura de Carga</span>
+            <span class="font-bold text-emerald-400">${ex.structure.load}</span>
+          </div>
+          <div class="bg-slate-950/80 p-2 rounded-xl border border-slate-800">
+            <span class="text-slate-500 font-extrabold uppercase block">Relação Numérica</span>
+            <span class="font-bold text-amber-400">${ex.structure.numerics}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    card.innerHTML = `
+      <div class="flex justify-between items-start gap-2">
+        <div>
+          <span class="text-[9px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 uppercase tracking-widest">${ex.phase || 'Geral'}</span>
+          <h3 class="font-black text-sm text-white mt-2 font-display uppercase tracking-wide">${ex.title}</h3>
+        </div>
+        <button type="button" onclick="addToCart('${ex.id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3 py-2 rounded-xl text-xs flex items-center gap-1 shrink-0 uppercase tracking-wider cursor-pointer">
+          <i class="fa-solid fa-plus"></i> Add
+        </button>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800 font-semibold">
+        <span><strong class="text-slate-400">Duração:</strong> ${ex.duration}</span>
+        <span><strong class="text-slate-400">Dimensões:</strong> ${ex.space}</span>
+      </div>
+      ${extraHTML}
+      <p class="text-[11px] text-slate-300 bg-slate-950/60 p-3 rounded-2xl border border-slate-800/80 leading-relaxed">${ex.objective}</p>
+    `;
+    container.appendChild(card);
+  });
+  document.getElementById('dash-exercises-count').innerText = state.exercises.length;
+}
+
+function filterLibrary() { renderLibrary(); }
+
+function addToCart(exId) {
+  const ex = state.exercises.find(e => e.id === exId);
+  if (!ex) return;
+  state.cart.push({ ...ex, cartId: Date.now() });
+  saveState();
+  renderCart();
+  alert('Exercício adicionado à Ficha da Sessão!');
+}
+
+function removeFromCart(cartId) {
+  state.cart = state.cart.filter(item => item.cartId !== cartId);
+  saveState();
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items-container');
+  if (state.cart.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-10 border-2 border-dashed border-slate-800 rounded-3xl text-slate-500 text-xs">
+        <i class="fa-solid fa-clipboard text-3xl mb-2 text-slate-700 block"></i>
+        Nenhum exercício adicionado à ficha da sessão.
+      </div>`;
+    document.getElementById('cart-total-time').innerText = '0 min total';
+    return;
+  }
+
+  container.innerHTML = '';
+  let totalMin = 0;
+  state.cart.forEach((ex, idx) => {
+    const matchMin = ex.duration.match(/\d+/);
+    if (matchMin) totalMin += parseInt(matchMin[0]);
+
+    const item = document.createElement('div');
+    item.className = 'bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between text-xs shadow-md';
+    item.innerHTML = `
+      <div class="flex items-center gap-3 overflow-hidden">
+        <span class="w-7 h-7 rounded-full bg-slate-800 text-emerald-400 font-black text-xs flex items-center justify-center shrink-0 border border-slate-700">${idx + 1}</span>
+        <div class="truncate">
+          <p class="font-black text-white text-xs truncate uppercase font-display">${ex.title}</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">${ex.duration} | Espaço: ${ex.space}</p>
+        </div>
+      </div>
+      <button type="button" onclick="removeFromCart(${ex.cartId})" class="text-slate-500 hover:text-rose-400 p-2 transition-all cursor-pointer">
+        <i class="fa-solid fa-trash-can text-sm"></i>
+      </button>
+    `;
+    container.appendChild(item);
+  });
+  document.getElementById('cart-total-time').innerText = totalMin + ' min total';
+}
+
+function saveState() {
+  localStorage.setItem('ct_exercises', JSON.stringify(state.exercises));
+  localStorage.setItem('ct_cart', JSON.stringify(state.cart));
+}
+
+// GERADOR DE SESSÃO HIPERESTRUTURADA E PROFISSIONAL (UEFA PRO)
+async function generateProSession() {
+  const category = document.getElementById('ai-category').value;
+  const md = document.getElementById('ai-md').value;
+  const phase = document.getElementById('ai-phase').value;
+  const players = document.getElementById('ai-players').value;
+  const custom = document.getElementById('ai-custom-prompt').value;
+  const resultsContainer = document.getElementById('ai-results-container');
+  const btn = document.getElementById('btn-run-ai');
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Estruturando Dinâmicas UEFA Pro...';
+
+  await new Promise(r => setTimeout(r, 800));
+
+  const sessionBlocks = [
+    {
+      blockNum: 'Bloco I (15 min)',
+      title: `Ativação Neuromuscular & Rondo Tático (${phase})`,
+      duration: '15 min',
+      space: '18x18m (Dividido em 2 setores)',
+      phase: 'Ativação Tática',
+      category,
+      structure: {
+        load: '3 séries de 4 min (Pausa: 1 min)',
+        numerics: '6v2 + 2 Coringas',
+        rules: 'Máximo 2 toques por atleta. Troca de passe após 5 conexões.',
+        coachTips: 'Exigir orientação corporal prévia antes de receber a bola.'
+      },
+      objective: `Aquecimento cognitivo focado em ${phase}. Circulação fluida sob pressão alta e reação rápida de transição imediata à perda.`,
+      rules: 'Se a defesa recuperar a bola, deve conectar passe com o coringa externo em menos de 3 segundos.'
+    },
+    {
+      blockNum: 'Bloco II (25 min)',
+      title: `Exercício Setorial / Construção em Posição (${category})`,
+      duration: '25 min',
+      space: '45x38m (Com 2 Corredores Laterais)',
+      phase: 'Organização Ofensiva',
+      category,
+      structure: {
+        load: '4 séries de 5 min (Pausa: 1,5 min)',
+        numerics: `${players}`,
+        rules: 'Aceleração vertical após romper o corredor central.',
+        coachTips: 'Gatilho de atração: Atrair o bloco rival para um lado antes do passe longo inverso.'
+      },
+      objective: `Desenvolvimento de comportamentos em ${phase}. ${custom || 'Atração da linha defensiva adversária e quebra de bloco com passe diagonal de rotura.'}`,
+      rules: 'Golos valem o dobro se a jogada iniciar com a participação do guarda-redes na zona de construção.'
+    },
+    {
+      blockNum: 'Bloco III (30 min)',
+      title: `Jogo Reduzido Condicionado (Situação Real de Jogo)`,
+      duration: '30 min',
+      space: '60x50m (Área a Área)',
+      phase: 'Transição / Competição',
+      category,
+      structure: {
+        load: '3 blocos de 8 min (Pausa: 2 min)',
+        numerics: '8v8 + 2 GR (Sistemas Reais)',
+        rules: 'Limite de 8 segundos para finalizar após recuperação.',
+        coachTips: 'Cobrar agressividade na primeira linha de pressão.'
+      },
+      objective: `Aplicação do Modelo de Jogo sob alta intensidade e pressão espacial. Simulação tática direta das dinâmicas do microciclo ${md}.`,
+      rules: 'A equipa defensiva ganha 1 ponto extra se forçar o passe para fora do campo na primeira linha.'
+    },
+    {
+      blockNum: 'Bloco IV (10 min)',
+      title: `Desativação & Compensação Tático-Física`,
+      duration: '10 min',
+      space: 'Meio Campo Regulamentar',
+      phase: 'Recuperação',
+      category,
+      structure: {
+        load: '1 série contínua de 10 min',
+        numerics: 'Todo o Elenco',
+        rules: 'Corrida regenerativa com exercícios de mobilidade.',
+        coachTips: 'Reunião de fechamento e análise dos pontos táticos do treino.'
+      },
+      objective: 'Retorno à calma, liberação miofascial ativa, alongamentos e alinhamento com a comissão técnica.',
+      rules: 'Execução sem exigência cognitiva.'
+    }
+  ];
+
+  resultsContainer.innerHTML = '';
+  for (let item of sessionBlocks) {
+    const id = 'pro-ex-' + Date.now() + '-' + Math.random();
+    const newEx = { id, ...item };
+    state.exercises.unshift(newEx);
+    await saveToCloud(newEx);
+    
+    const div = document.createElement('div');
+    div.className = 'card-tactics rounded-3xl p-5 space-y-4 border border-slate-800 shadow-xl';
+    div.innerHTML = `
+      <div class="flex flex-wrap justify-between items-start gap-2 border-b border-slate-800/80 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[9px] font-black text-slate-950 bg-amber-400 px-2.5 py-0.5 rounded-full uppercase tracking-wider">${item.blockNum}</span>
+            <span class="text-[9px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20 uppercase tracking-wider">${item.phase}</span>
+          </div>
+          <h3 class="font-black text-base text-white mt-2 font-display uppercase tracking-wide">${item.title}</h3>
+        </div>
+        <button type="button" onclick="addToCart('${id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 uppercase tracking-wider cursor-pointer">
+          <i class="fa-solid fa-plus"></i> Adicionar à Ficha
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px]">
+        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+          <span class="text-slate-500 font-extrabold uppercase text-[9px] block">Dimensão do Espaço</span>
+          <span class="font-bold text-slate-200">${item.space}</span>
+        </div>
+        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+          <span class="text-slate-500 font-extrabold uppercase text-[9px] block">Carga / Séries</span>
+          <span class="font-bold text-emerald-400">${item.structure.load}</span>
+        </div>
+        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+          <span class="text-slate-500 font-extrabold uppercase text-[9px] block">Relação Numérica</span>
+          <span class="font-bold text-amber-400">${item.structure.numerics}</span>
+        </div>
+        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+          <span class="text-slate-500 font-extrabold uppercase text-[9px] block">Microciclo</span>
+          <span class="font-bold text-sky-400">${md.split(' ')[0]}</span>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <div class="bg-slate-950/60 p-3 rounded-2xl border border-slate-800/60">
+          <span class="font-extrabold text-emerald-400 uppercase text-[10px] block mb-1">Objetivo Tático & Cognitivo:</span>
+          <p class="text-slate-300 leading-relaxed">${item.objective}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div class="bg-slate-950/60 p-3 rounded-2xl border border-slate-800/60">
+            <span class="font-extrabold text-amber-400 uppercase text-[10px] block mb-1">Regras de Provocação:</span>
+            <p class="text-slate-300">${item.rules}</p>
+          </div>
+          <div class="bg-slate-950/60 p-3 rounded-2xl border border-slate-800/60">
+            <span class="font-extrabold text-sky-400 uppercase text-[10px] block mb-1">Gatilho de Orientação (Feedback):</span>
+            <p class="text-slate-300">${item.structure.coachTips}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    resultsContainer.appendChild(div);
+  }
+  saveState();
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Sessão Completa Hiperestruturada';
+}
+
+/* PRANCHETA TÁTICA CANVAS */
+let boardCanvas, boardCtx, currentTool = 'blue_player', pitchType = 'full', isDrawing = false, startX, startY;
+
+function initBoardCanvas() {
+  boardCanvas = document.getElementById('interactive-board');
+  if (!boardCanvas) return;
+  boardCtx = boardCanvas.getContext('2d');
+  
+  boardCanvas.onmousedown = handleBoardStart;
+  boardCanvas.onmousemove = handleBoardMove;
+  boardCanvas.onmouseup = handleBoardEnd;
+  
+  boardCanvas.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    handleBoardStart({ clientX: touch.clientX, clientY: touch.clientY });
+  });
+  boardCanvas.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    handleBoardMove({ clientX: touch.clientX, clientY: touch.clientY });
+  });
+  boardCanvas.addEventListener('touchend', handleBoardEnd);
+  
+  drawBasePitch();
+}
+
+function changePitchType() {
+  pitchType = document.getElementById('board-pitch-type').value;
+  drawBasePitch();
+}
+
+function drawBasePitch() {
+  const w = boardCanvas.width;
+  const h = boardCanvas.height;
+  
+  boardCtx.fillStyle = '#022c22';
+  boardCtx.fillRect(0, 0, w, h);
+  
+  boardCtx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+  boardCtx.lineWidth = 2;
+  boardCtx.strokeRect(20, 20, w - 40, h - 40);
+  
+  if (pitchType === 'full') {
+    boardCtx.beginPath();
+    boardCtx.moveTo(w/2, 20);
+    boardCtx.lineTo(w/2, h - 20);
+    boardCtx.stroke();
+    
+    boardCtx.beginPath();
+    boardCtx.arc(w/2, h/2, 50, 0, Math.PI * 2);
+    boardCtx.stroke();
+  } else {
+    boardCtx.beginPath();
+    boardCtx.arc(w/2, h - 20, 60, Math.PI, 0);
+    boardCtx.stroke();
+  }
+}
+
+function setBoardTool(tool) { currentTool = tool; }
+function clearBoard() { drawBasePitch(); }
+
+function handleBoardStart(e) {
+  const rect = boardCanvas.getBoundingClientRect();
+  startX = (e.clientX - rect.left) * (boardCanvas.width / rect.width);
+  startY = (e.clientY - rect.top) * (boardCanvas.height / rect.height);
+  isDrawing = true;
+  
+  if (currentTool === 'blue_player') drawToken(startX, startY, '#0284c7', 'A');
+  else if (currentTool === 'red_player') drawToken(startX, startY, '#e11d48', 'D');
+  else if (currentTool === 'yellow_player') drawToken(startX, startY, '#f59e0b', 'C');
+  else if (currentTool === 'ball') drawToken(startX, startY, '#ffffff', 'B', 7);
+}
+
+function handleBoardMove(e) {
+  if (!isDrawing || currentTool !== 'line') return;
+  const rect = boardCanvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (boardCanvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (boardCanvas.height / rect.height);
+  
+  boardCtx.strokeStyle = '#fbbf24';
+  boardCtx.lineWidth = 3;
+  boardCtx.beginPath();
+  boardCtx.moveTo(startX, startY);
+  boardCtx.lineTo(x, y);
+  boardCtx.stroke();
+  startX = x;
+  startY = y;
+}
+
+function handleBoardEnd() { isDrawing = false; }
+
+function drawToken(x, y, color, label, radius = 14) {
+  boardCtx.fillStyle = color;
+  boardCtx.beginPath();
+  boardCtx.arc(x, y, radius, 0, Math.PI * 2);
+  boardCtx.fill();
+  boardCtx.strokeStyle = '#ffffff';
+  boardCtx.lineWidth = 2.5;
+  boardCtx.stroke();
+}
+
+async function saveBoardToLibrary() {
+  const id = 'ex-board-' + Date.now();
+  const newEx = {
+    id,
+    title: 'Esquema Tático (Prancheta 2D)',
+    duration: '20 min',
+    space: 'Espaço Regulamentar',
+    phase: 'Organização Tática',
+    objective: 'Desenho tático interativo gravado via Prancheta 2D.',
+    rules: 'Manter ocupação racional dos espaços.'
+  };
+  state.exercises.unshift(newEx);
+  await saveToCloud(newEx);
+  saveState();
+  alert('Esquema tático salvo na Biblioteca!');
+}
+
+function openNewExerciseModal() { document.getElementById('modal-new-exercise').classList.remove('hidden'); }
+function closeNewExerciseModal() { document.getElementById('modal-new-exercise').classList.add('hidden'); }
+
+async function saveManualExercise() {
+  const title = document.getElementById('new-ex-title').value;
+  const duration = document.getElementById('new-ex-duration').value || '20 min';
+  const space = document.getElementById('new-ex-space').value || '35x30m';
+  const objective = document.getElementById('new-ex-objective').value;
+  
+  if (!title) { alert('Insira o título do exercício.'); return; }
+  
+  const newEx = {
+    id: 'ex-man-' + Date.now(),
+    title, duration, space, phase: 'Geral', objective, rules: ''
+  };
+  state.exercises.unshift(newEx);
+  await saveToCloud(newEx);
+  saveState();
+  closeNewExerciseModal();
+  renderLibrary();
+}
+
+function exportToPDF() {
+  if (state.cart.length === 0) { alert('A ficha da sessão está vazia!'); return; }
+  const printContent = document.getElementById('print-content');
+  printContent.innerHTML = '';
+  state.cart.forEach((ex, i) => {
+    printContent.innerHTML += `
+      <div style="border:1px solid #ccc; padding:12px; margin-bottom:12px; border-radius:8px;">
+        <h3><strong>Bloco ${i+1}: ${ex.title}</strong> (${ex.duration})</h3>
+        <p><strong>Espaço:</strong> ${ex.space}</p>
+        <p><strong>Objetivo Tático:</strong> ${ex.objective}</p>
+      </div>`;
+  });
+  window.print();
+}
+
+function shareWhatsApp() {
+  if (state.cart.length === 0) { alert('A ficha da sessão está vazia!'); return; }
+  let text = '*COACH TACTICS PRO - FICHA TÉCNICA DE SESSÃO*\n\n';
+  state.cart.forEach((ex, i) => {
+    text += `*Bloco ${i+1}: ${ex.title}* (${ex.duration})\n• Espaço: ${ex.space}\n• Objetivo: ${ex.objective}\n\n`;
+  });
+  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('cart-date').valueAsDate = new Date();
+  document.getElementById('cfg-url').value = supabaseUrl;
+  document.getElementById('cfg-key').value = supabaseKey;
+  checkAuthSession();
+});
+</script>
+</body>
+</html>
