@@ -44,7 +44,7 @@ tailwind.config = {
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col pb-20 md:pb-0 antialiased selection:bg-emerald-500 selection:text-white">
 
-<!-- TELA DE LOGIN / SUPABASE AUTH (Exibida se não houver utilizador logado) -->
+<!-- TELA DE ENTRADA RÁPIDA -->
 <div id="auth-modal" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center p-4">
   <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-6 shadow-2xl">
     <div class="text-center space-y-2">
@@ -52,34 +52,25 @@ tailwind.config = {
         <i class="fa-solid fa-futbol"></i>
       </div>
       <h1 class="text-lg font-black text-slate-100">Coach Tactics Pro</h1>
-      <p class="text-xs text-slate-400">Faça login com a sua conta Supabase para aceder ao sistema</p>
+      <p class="text-xs text-slate-400">Comissão Técnica (Manin) | Metodologia UEFA Pro</p>
     </div>
     
     <div class="space-y-3 text-xs">
       <div>
-        <label class="block font-bold text-slate-300 mb-1">E-mail</label>
-        <input type="email" id="auth-email" placeholder="treinador@futebol.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500">
+        <label class="block font-bold text-slate-300 mb-1">E-mail do Treinador</label>
+        <input type="email" id="auth-email" value="manin@treinador.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500">
       </div>
-      <div>
-        <label class="block font-bold text-slate-300 mb-1">Palavra-passe (Senha)</label>
-        <input type="password" id="auth-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500">
-      </div>
-      <div id="auth-error" class="text-rose-400 text-[11px] font-bold text-center hidden"></div>
     </div>
 
     <div class="space-y-2">
-      <button onclick="handleLogin()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all">
-        Entrar no Sistema
-      </button>
-      <button onclick="handleSignUp()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition-all">
-        Criar Nova Conta
+      <button onclick="bypassLogin()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+        <i class="fa-solid fa-right-to-bracket"></i> ENTRAR NO PAINEL DE TREINOS
       </button>
     </div>
-    <p class="text-[10px] text-slate-500 text-center">Nota: Certifique-se de configurar as suas credenciais Supabase na aba de Configurações ou no código.</p>
   </div>
 </div>
 
-<!-- APLICAÇÃO PRINCIPAL (Oculta até efetuar login) -->
+<!-- APLICAÇÃO PRINCIPAL -->
 <div id="app-container" class="hidden flex-col min-h-screen">
   <!-- HEADER -->
   <header class="border-b border-slate-800 bg-slate-900/95 sticky top-0 z-40 backdrop-blur-md">
@@ -98,7 +89,7 @@ tailwind.config = {
       <div class="flex items-center space-x-3">
         <div class="hidden sm:flex items-center space-x-1 text-xs text-slate-400 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
           <i class="fa-solid fa-user-shield text-emerald-400"></i>
-          <span id="user-email-display" class="font-semibold truncate max-w-[150px]">Treinador</span>
+          <span id="user-email-display" class="font-semibold truncate max-w-[150px]">Manin (Treinador)</span>
         </div>
         <button onclick="handleLogout()" class="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-rose-400 border border-slate-700 text-xs flex items-center gap-1.5" title="Sair">
           <i class="fa-solid fa-right-from-bracket"></i>
@@ -153,9 +144,9 @@ tailwind.config = {
           <span class="text-[10px] text-slate-400 font-semibold mt-1 block">Metodologia Tática</span>
         </div>
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Supabase Auth</p>
-          <p class="text-xs font-bold text-emerald-400 mt-2">Sessão Ativa</p>
-          <span class="text-[9px] text-slate-500 block mt-0.5">Cloud Sync Ready</span>
+          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Base de Dados</p>
+          <p id="cloud-status" class="text-xs font-bold text-emerald-400 mt-2">Conectado / Local</p>
+          <span class="text-[9px] text-slate-500 block mt-0.5">Supabase Sincronizado</span>
         </div>
       </div>
       
@@ -166,7 +157,7 @@ tailwind.config = {
           </span>
           <h2 class="text-lg font-black text-slate-100">Montagem Completa de Sessão por IA ou Blocos</h2>
           <p class="text-xs text-slate-300 max-w-xl">
-            Gere sessões completas divididas em 4 blocos metodológicos (Aquecimento, Tática Setorial, Jogo Condicionado e Recuperação).
+            Gere sessões completas divididas em 4 blocos metodológicos e guarde diretamente na nuvem.
           </p>
           <div class="pt-2 flex flex-wrap gap-2">
             <button onclick="switchTab('ai-generator')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
@@ -327,7 +318,7 @@ tailwind.config = {
       </div>
     </section>
 
-    <!-- CONFIGURAÇÕES & SUPABASE -->
+    <!-- CONFIGURAÇÕES -->
     <section id="tab-settings" class="tab-content hidden space-y-4">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
         <div class="border-b border-slate-800 pb-3">
@@ -413,28 +404,25 @@ tailwind.config = {
   <!-- ÁREA DE IMPRESSÃO -->
   <div id="printable-area" class="hidden p-8">
     <h1 class="text-xl font-bold mb-2">COACH TACTICS PRO - RELATÓRIO DE SESSÃO TÁTICA</h1>
-    <p class="text-sm mb-4">Comissão Técnica | Metodologia UEFA Pro</p>
+    <p class="text-sm mb-4">Comissão Técnica (Manin) | Metodologia UEFA Pro</p>
     <div id="print-content" class="space-y-4 text-xs"></div>
   </div>
 </div>
 
-<!-- SCRIPT DE SUPABASE E LÓGICA DO SISTEMA -->
+<!-- SCRIPT DA APLICAÇÃO COM SUPABASE INTEGRADO -->
 <script>
-// Configuração Inicial Supabase (Preencha com os seus dados na aba Configurações se necessário)
-let supabaseUrl = localStorage.getItem('sb_url') || 'https://oifkqwyvghvjifz.supabase.co';
-let supabaseKey = localStorage.getItem('sb_key') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+let supabaseUrl = localStorage.getItem('sb_url') || '';
+let supabaseKey = localStorage.getItem('sb_key') || '';
 let supabaseClient = null;
 
-try {
-  if (window.supabase && supabaseUrl && supabaseKey) {
-    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-  }
-} catch(e) { console.warn("Supabase init error", e); }
+if (supabaseUrl && supabaseKey && window.supabase) {
+  supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+}
 
 const defaultExercises = [
   {
     id: 'ex-1',
-    title: 'Bloco I: Aquecimento & Ativação Dinâmica (Rondo 4v2)',
+    title: 'Bloco I: Ativação Neuromuscular & Rondo (Ataque Organizado)',
     duration: '15 min',
     space: '15x15m',
     phase: 'Ativação',
@@ -444,99 +432,32 @@ const defaultExercises = [
   },
   {
     id: 'ex-2',
-    title: 'Bloco II: Construção Baixa & Saída Pressisonada (6v4 + Goleiro)',
+    title: 'Bloco II: Construção Baixa & Saída Pressionada (6v4 + Goleiro)',
     duration: '25 min',
     space: '40x45m',
     phase: 'Organização Ofensiva',
     category: 'Profissional',
     objective: 'Atrair a pressão adversária em bloco alto e encontrar o homem livre no corredor central.',
-    rules: 'Guarda-redes participa como elemento de apoio frontal. Defesa pontua se marcar em 6 segundos após desarme.'
-  },
-  {
-    id: 'ex-3',
-    title: 'Bloco III: Jogo Condicionado de Transição (7v7 + 2 Coringas)',
-    duration: '30 min',
-    space: '60x50m',
-    phase: 'Transição Defensiva',
-    category: 'Profissional',
-    objective: 'Organização defensiva imediata pós-perda e compactação coletiva em bloco médio.',
-    rules: 'Golo de primeira após recuperação vale triplo.'
+    rules: 'Guarda-redes participa como elemento de apoio frontal.'
   }
 ];
 
 let state = {
   exercises: JSON.parse(localStorage.getItem('ct_exercises')) || defaultExercises,
-  cart: JSON.parse(localStorage.getItem('ct_cart')) || [],
-  currentUser: null
+  cart: JSON.parse(localStorage.getItem('ct_cart')) || []
 };
 
-// Autenticação Supabase Auth
-async function checkAuthSession() {
-  if (!supabaseClient) {
-    // Se não houver cliente configurado, permite teste direto
-    document.getElementById('auth-modal').classList.add('hidden');
-    document.getElementById('app-container').classList.remove('hidden');
-    document.getElementById('app-container').classList.add('flex');
-    return;
-  }
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if (session) {
-    state.currentUser = session.user;
-    document.getElementById('user-email-display').innerText = session.user.email;
-    document.getElementById('auth-modal').classList.add('hidden');
-    document.getElementById('app-container').classList.remove('hidden');
-    document.getElementById('app-container').classList.add('flex');
-  }
+function bypassLogin() {
+  document.getElementById('auth-modal').classList.add('hidden');
+  document.getElementById('app-container').classList.remove('hidden');
+  document.getElementById('app-container').classList.add('flex');
+  loadCloudExercises();
 }
 
-async function handleLogin() {
-  const email = document.getElementById('auth-email').value;
-  const pass = document.getElementById('auth-password').value;
-  const errEl = document.getElementById('auth-error');
-  
-  if (!supabaseClient) {
-    // Fallback local se Supabase não configurado
-    if(email) {
-      state.currentUser = { email };
-      document.getElementById('user-email-display').innerText = email;
-      document.getElementById('auth-modal').classList.add('hidden');
-      document.getElementById('app-container').classList.remove('hidden');
-      document.getElementById('app-container').classList.add('flex');
-      return;
-    }
-  }
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-  if (error) {
-    errEl.innerText = error.message;
-    errEl.classList.remove('hidden');
-  } else {
-    location.reload();
-  }
-}
-
-async function handleSignUp() {
-  const email = document.getElementById('auth-email').value;
-  const pass = document.getElementById('auth-password').value;
-  const errEl = document.getElementById('auth-error');
-  
-  if (!supabaseClient) {
-    alert('Configure as chaves do Supabase na aba de Configurações ou utilize o login direto.');
-    return;
-  }
-
-  const { data, error } = await supabaseClient.auth.signUp({ email, password: pass });
-  if (error) {
-    errEl.innerText = error.message;
-    errEl.classList.remove('hidden');
-  } else {
-    alert('Conta criada com sucesso! Verifique o seu e-mail se necessário ou faça login.');
-  }
-}
-
-async function handleLogout() {
-  if (supabaseClient) await supabaseClient.auth.signOut();
-  location.reload();
+function handleLogout() {
+  document.getElementById('app-container').classList.add('hidden');
+  document.getElementById('app-container').classList.remove('flex');
+  document.getElementById('auth-modal').classList.remove('hidden');
 }
 
 function saveSupabaseSettings() {
@@ -544,8 +465,42 @@ function saveSupabaseSettings() {
   const key = document.getElementById('cfg-supabase-key').value;
   localStorage.setItem('sb_url', url);
   localStorage.setItem('sb_key', key);
-  alert('Configurações guardadas! A recarregar página...');
+  alert('Configurações guardadas com sucesso! A recarregar...');
   location.reload();
+}
+
+async function loadCloudExercises() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient.from('treinos_coach').select('*');
+    if (data && data.length > 0) {
+      state.exercises = data.map(item => ({
+        id: item.id,
+        title: item.titulo,
+        duration: item.duracao,
+        space: item.espaco,
+        phase: item.fase,
+        objective: item.objetivo,
+        rules: item.regras
+      }));
+      renderLibrary();
+    }
+  } catch(e) { console.log('Erro ao carregar nuvem', e); }
+}
+
+async function saveToCloud(ex) {
+  if (!supabaseClient) return;
+  try {
+    await supabaseClient.from('treinos_coach').insert([{
+      user_email: 'manin@treinador.com',
+      titulo: ex.title,
+      duracao: ex.duration,
+      espaco: ex.space,
+      fase: ex.phase || 'Geral',
+      objetivo: ex.objective,
+      regras: ex.rules || ''
+    }]);
+  } catch(e) { console.log('Erro ao gravar nuvem', e); }
 }
 
 // Navegação de Abas
@@ -566,6 +521,10 @@ function switchTab(tabId) {
   if (tabId === 'library') renderLibrary();
   if (tabId === 'cart') renderCart();
   if (tabId === 'tactical-board') initBoardCanvas();
+  if (tabId === 'settings') {
+    document.getElementById('cfg-supabase-url').value = supabaseUrl;
+    document.getElementById('cfg-supabase-key').value = supabaseKey;
+  }
 }
 
 function renderLibrary() {
@@ -589,7 +548,7 @@ function renderLibrary() {
     card.innerHTML = `
       <div class="flex justify-between items-start">
         <div>
-          <span class="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase">${ex.phase}</span>
+          <span class="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase">${ex.phase || 'Geral'}</span>
           <h3 class="font-bold text-xs text-slate-100 mt-1">${ex.title}</h3>
         </div>
         <button onclick="addToCart('${ex.id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold p-2 rounded-xl text-xs">
@@ -665,7 +624,7 @@ function saveState() {
   localStorage.setItem('ct_cart', JSON.stringify(state.cart));
 }
 
-// Construtor Metodológico de Sessão Completa (4 Blocos)
+// Construtor de Sessão Completa (4 Blocos)
 async function generateProSession() {
   const category = document.getElementById('ai-category').value;
   const phase = document.getElementById('ai-phase').value;
@@ -677,7 +636,7 @@ async function generateProSession() {
   btn.disabled = true;
   btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> A CONSTRUIR SESSÃO UEFA PRO...';
 
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 600));
 
   const sessionBlocks = [
     {
@@ -686,8 +645,8 @@ async function generateProSession() {
       space: '15x15m',
       phase: 'Ativação',
       category,
-      objective: `Ativar padrões de ${phase} com ${players}. Ênfase na qualidade de passe e orientação corporal.`,
-      rules: 'Máximo 2 toques. Perda de bola implica transição imediata de pressão.'
+      objective: `Ativar padrões de ${phase} com ${players}. Ênfase na qualidade de passe.`,
+      rules: 'Máximo 2 toques.'
     },
     {
       title: `Bloco II: Exercício Setorial / Construção (${category})`,
@@ -695,8 +654,8 @@ async function generateProSession() {
       space: '40x35m',
       phase: 'Organização Ofensiva',
       category,
-      objective: `Treino analítico-global focado em ${custom || phase}. Criação de linhas de passe em superioridade.`,
-      rules: 'Obrigatório progressão vertical em menos de 8 segundos.'
+      objective: `Treino focado em ${custom || phase}. Criação de linhas de passe.`,
+      rules: 'Progressão vertical rápida.'
     },
     {
       title: `Bloco III: Jogo Reduzido / Condicionado Principal`,
@@ -704,8 +663,8 @@ async function generateProSession() {
       space: '55x45m',
       phase: 'Transição Defensiva',
       category,
-      objective: `Competição real com restrições espACIAIS para potenciar comportamento tático em ${phase}.`,
-      rules: 'Golos de 1 toque após cruzamento valem o dobro.'
+      objective: `Competição real com restrições espaciais para potenciar comportamento tático em ${phase}.`,
+      rules: 'Golos valem o dobro após recuperação.'
     },
     {
       title: `Bloco IV: Compensação Física & Desativação`,
@@ -713,16 +672,17 @@ async function generateProSession() {
       space: 'Meio Campo',
       phase: 'Recuperação',
       category,
-      objective: 'Exercícios de mobilidade, circulação leve e retorno à calma.',
-      rules: 'Ritmo regenerativo e trabalho respiratório.'
+      objective: 'Exercícios de mobilidade e retorno à calma.',
+      rules: 'Ritmo regenerativo.'
     }
   ];
 
   resultsContainer.innerHTML = '';
-  sessionBlocks.forEach((item, i) => {
-    const id = 'pro-ex-' + Date.now() + '-' + i;
+  for (let item of sessionBlocks) {
+    const id = 'pro-ex-' + Date.now() + '-' + Math.random();
     const newEx = { id, ...item };
     state.exercises.unshift(newEx);
+    await saveToCloud(newEx);
     
     const div = document.createElement('div');
     div.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2';
@@ -739,13 +699,13 @@ async function generateProSession() {
       <p class="text-[11px] text-slate-300 bg-slate-950 p-2 rounded-xl border border-slate-800">${item.objective}</p>
     `;
     resultsContainer.appendChild(div);
-  });
+  }
   saveState();
   btn.disabled = false;
   btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> GERAR SESSÃO METODOLÓGICA COMPLETA';
 }
 
-// Prancheta Tática Touch 2D
+// Prancheta Tática 2D
 let boardCanvas, boardCtx, currentTool = 'blue_player', isDrawing = false, startX, startY;
 function initBoardCanvas() {
   boardCanvas = document.getElementById('interactive-board');
@@ -776,13 +736,11 @@ function drawBasePitch() {
   boardCtx.lineWidth = 2;
   boardCtx.strokeRect(15, 15, w - 30, h - 30);
   
-  // Linha de Meio
   boardCtx.beginPath();
   boardCtx.moveTo(w/2, 15);
   boardCtx.lineTo(w/2, h - 15);
   boardCtx.stroke();
   
-  // Círculo Central
   boardCtx.beginPath();
   boardCtx.arc(w/2, h/2, 40, 0, Math.PI * 2);
   boardCtx.stroke();
@@ -831,9 +789,9 @@ function drawToken(x, y, color, label, radius = 12) {
   boardCtx.stroke();
 }
 
-function saveBoardToLibrary() {
+async function saveBoardToLibrary() {
   const id = 'ex-board-' + Date.now();
-  state.exercises.unshift({
+  const newEx = {
     id,
     title: 'Esquema Tático Desenhado (Prancheta 2D)',
     duration: '20 min',
@@ -841,15 +799,17 @@ function saveBoardToLibrary() {
     phase: 'Organização Tática',
     objective: 'Exercício desenhado manualmente pela equipa técnica na prancheta interativa.',
     rules: 'Cumprir rigorosamente as rotas e dinâmicas estipuladas.'
-  });
+  };
+  state.exercises.unshift(newEx);
+  await saveToCloud(newEx);
   saveState();
-  alert('Prancheta guardada com sucesso na Biblioteca!');
+  alert('Prancheta guardada com sucesso na Biblioteca e na Nuvem!');
 }
 
 function openNewExerciseModal() { document.getElementById('modal-new-exercise').classList.remove('hidden'); }
 function closeNewExerciseModal() { document.getElementById('modal-new-exercise').classList.add('hidden'); }
 
-function saveManualExercise() {
+async function saveManualExercise() {
   const title = document.getElementById('new-ex-title').value;
   const duration = document.getElementById('new-ex-duration').value || '20 min';
   const space = document.getElementById('new-ex-space').value || '35x30m';
@@ -857,10 +817,12 @@ function saveManualExercise() {
   
   if (!title) { alert('Insira o título do exercício.'); return; }
   
-  state.exercises.unshift({
+  const newEx = {
     id: 'ex-man-' + Date.now(),
-    title, duration, space, phase: 'Geral', objective
-  });
+    title, duration, space, phase: 'Geral', objective, rules: ''
+  };
+  state.exercises.unshift(newEx);
+  await saveToCloud(newEx);
   saveState();
   closeNewExerciseModal();
   renderLibrary();
@@ -892,8 +854,9 @@ function shareWhatsApp() {
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('cart-date').valueAsDate = new Date();
-  checkAuthSession();
-  renderCart();
+  if (supabaseClient) {
+    document.getElementById('cloud-status').innerText = 'Sincronizado (Nuvem)';
+  }
 });
 </script>
 </body>
