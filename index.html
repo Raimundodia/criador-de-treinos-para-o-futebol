@@ -8,8 +8,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Font Awesome 6 Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts Inter -->
-<link href="https://fonts.googleapis.com/css?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Google Fonts Inter & Rajdhani -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
 <!-- Supabase JS Client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -18,23 +18,44 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        pitch: { DEFAULT: '#10B981', dark: '#059669', light: '#34D399', bg: '#0A1912' },
-        gold: { DEFAULT: '#F59E0B', light: '#FBBF24' }
+        pitch: { DEFAULT: '#059669', dark: '#022c22', light: '#10b981', line: 'rgba(255,255,255,0.7)' },
+        gold: { DEFAULT: '#f59e0b', light: '#fbbf24', dark: '#b45309' }
       },
-      fontFamily: { sans: ['Inter', 'sans-serif'] }
+      fontFamily: { 
+        sans: ['Inter', 'sans-serif'],
+        display: ['Rajdhani', 'sans-serif']
+      }
     }
   }
 }
 </script>
 <style>
 * { touch-action: manipulation; }
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: #0f172a; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
-.pitch-grid {
-  background-color: #064e3b;
-  background-image: repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(16, 185, 129, 0.08) 25px, rgba(16, 185, 129, 0.08) 50px);
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #020617; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+.pitch-bg {
+  background-color: #022c22;
+  background-image: repeating-linear-gradient(0deg, #022c22, #022c22 30px, #033a2d 30px, #033a2d 60px);
+  border: 2px solid #059669;
+  box-shadow: 0 0 25px rgba(5, 150, 105, 0.2);
 }
+
+.glow-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.card-tactics {
+  background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+  border: 1px solid #1e293b;
+}
+
 @media print {
   .no-print { display: none !important; }
   #printable-area { display: block !important; background: #fff !important; color: #000 !important; }
@@ -42,914 +63,172 @@ tailwind.config = {
 }
 </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col pb-20 md:pb-0 antialiased selection:bg-emerald-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col pb-20 md:pb-0 antialiased selection:bg-emerald-500 selection:text-slate-950">
 
-<!-- TELA DE LOGIN / AUTENTICAÇÃO -->
-<div id="auth-modal" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl">
-    <div class="text-center space-y-2">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 font-black text-xl mx-auto shadow-lg shadow-emerald-500/20">
+<!-- TELA DE AUTENTICAÇÃO / LOGIN -->
+<div id="auth-modal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-6 space-y-6 shadow-2xl relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+
+    <div class="text-center space-y-2 relative z-10">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 font-black text-2xl mx-auto shadow-lg shadow-emerald-500/20">
         <i class="fa-solid fa-futbol"></i>
       </div>
-      <h1 class="text-lg font-black text-slate-100">Coach Tactics Pro</h1>
-      <p class="text-xs text-slate-400">Faça login com a sua conta de assinante</p>
+      <h1 class="text-2xl font-black font-display tracking-wide text-white uppercase">Coach Tactics <span class="text-emerald-400">Pro</span></h1>
+      <p class="text-xs text-slate-400 font-medium">Plataforma Metodológica de Treinadores Profissionais</p>
     </div>
     
-    <div class="space-y-3 text-xs">
+    <div class="space-y-3.5 text-xs relative z-10">
       <div>
-        <label class="block font-bold text-slate-300 mb-1">E-mail</label>
-        <input type="email" id="auth-email" placeholder="treinador@futebol.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500">
+        <label class="block font-bold text-slate-300 mb-1.5 uppercase tracking-wider text-[10px]">E-mail do Treinador</label>
+        <div class="relative">
+          <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-slate-500"></i>
+          <input type="email" id="auth-email" placeholder="treinador@futebol.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-3 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
+        </div>
       </div>
       <div>
-        <label class="block font-bold text-slate-300 mb-1">Palavra-passe (Senha)</label>
-        <input type="password" id="auth-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500">
+        <label class="block font-bold text-slate-300 mb-1.5 uppercase tracking-wider text-[10px]">Palavra-passe (Senha)</label>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-500"></i>
+          <input type="password" id="auth-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-3 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
+        </div>
       </div>
-      <div id="auth-error" class="text-rose-400 text-[11px] font-bold text-center p-2 bg-rose-950/40 rounded-xl border border-rose-900/50 hidden"></div>
+      <div id="auth-error" class="text-rose-400 text-[11px] font-bold text-center p-2.5 bg-rose-950/40 rounded-xl border border-rose-900/50 hidden"></div>
     </div>
 
-    <div class="space-y-2">
-      <button onclick="handleLogin()" id="btn-login" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
-        <i class="fa-solid fa-right-to-bracket"></i> ENTRAR NO SISTEMA
+    <div class="space-y-2.5 relative z-10">
+      <button onclick="handleLogin()" id="btn-login" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 uppercase tracking-wider">
+        <i class="fa-solid fa-right-to-bracket"></i> Acessar Painel do Treinador
       </button>
-      <button onclick="handleSignUp()" id="btn-signup" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition-all">
-        Criar Nova Conta
+      <button onclick="handleSignUp()" id="btn-signup" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition-all uppercase tracking-wider">
+        Cadastrar Nova Conta
       </button>
     </div>
-    <div class="flex justify-between items-center text-[10px] text-slate-500 pt-2 border-t border-slate-800">
-      <span>Acesso restrito via Supabase.</span>
-      <button onclick="forceShowSettingsFromAuth()" class="text-emerald-400 hover:underline">Configurar Chaves Supabase</button>
+
+    <div class="flex justify-between items-center text-[10px] text-slate-500 pt-3 border-t border-slate-800 relative z-10">
+      <span><i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> Supabase Auth</span>
+      <button onclick="forceShowSettingsFromAuth()" class="text-emerald-400 hover:underline font-semibold">Configurar Supabase</button>
     </div>
   </div>
 </div>
 
 <!-- APLICAÇÃO PRINCIPAL -->
 <div id="app-container" class="hidden flex-col min-h-screen">
-  <header class="border-b border-slate-800 bg-slate-900/95 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-      <div class="flex items-center space-x-2.5">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 font-black text-base shadow-md shadow-emerald-500/20">
+  <header class="border-b border-slate-800/80 bg-slate-900/90 sticky top-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 font-black text-lg shadow-md shadow-emerald-500/20">
           <i class="fa-solid fa-futbol"></i>
         </div>
         <div>
-          <div class="flex items-center space-x-1.5">
-            <span class="font-black text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">Coach Tactics</span>
-            <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">UEFA Pro</span>
+          <div class="flex items-center space-x-2">
+            <span class="font-black text-lg tracking-tight font-display uppercase bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">Coach Tactics</span>
+            <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/30 uppercase tracking-widest">UEFA Pro</span>
           </div>
         </div>
       </div>
       <div class="flex items-center space-x-3">
-        <div class="hidden sm:flex items-center space-x-1 text-xs text-slate-400 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
-          <i class="fa-solid fa-user-shield text-emerald-400"></i>
-          <span id="user-email-display" class="font-semibold truncate max-w-[180px]">Treinador</span>
+        <div class="hidden sm:flex items-center space-x-2 text-xs text-slate-300 bg-slate-950 px-3.5 py-1.5 rounded-xl border border-slate-800">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="user-email-display" class="font-bold truncate max-w-[180px]">Treinador</span>
         </div>
-        <button onclick="handleLogout()" class="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-rose-400 border border-slate-700 text-xs flex items-center gap-1.5" title="Sair">
+        <button onclick="handleLogout()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-rose-950/60 text-slate-300 hover:text-rose-400 border border-slate-700 hover:border-rose-800/60 text-xs flex items-center gap-2 transition-all">
           <i class="fa-solid fa-right-from-bracket"></i>
-          <span class="hidden sm:inline">Sair</span>
+          <span class="hidden sm:inline font-bold">Sair</span>
         </button>
       </div>
     </div>
   </header>
 
-  <nav class="hidden md:flex border-b border-slate-800 bg-slate-900/60 px-6 py-2 gap-2 text-xs font-semibold max-w-7xl mx-auto w-full">
-    <button onclick="switchTab('dashboard')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 bg-slate-800 text-emerald-400" data-tab="dashboard">
+  <!-- NAVIGATION BAR (DESKTOP) -->
+  <nav class="hidden md:flex border-b border-slate-800/60 bg-slate-900/40 px-6 py-2.5 gap-2 text-xs font-bold max-w-7xl mx-auto w-full">
+    <button onclick="switchTab('dashboard')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 bg-slate-800 text-emerald-400 border border-slate-700" data-tab="dashboard">
       <i class="fa-solid fa-chart-pie"></i> Dashboard
     </button>
     <button onclick="switchTab('ai-generator')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="ai-generator">
-      <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Gerador Sessão Pro
+      <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Gerador Pro de Treinos
     </button>
     <button onclick="switchTab('tactical-board')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="tactical-board">
-      <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Prancheta 2D
+      <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Prancheta 2D Pro
     </button>
     <button onclick="switchTab('library')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="library">
-      <i class="fa-solid fa-layer-group"></i> Biblioteca
+      <i class="fa-solid fa-layer-group"></i> Biblioteca Tática
     </button>
     <button onclick="switchTab('cart')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="cart">
       <i class="fa-solid fa-file-pen text-amber-400"></i> Ficha da Sessão
     </button>
     <button onclick="switchTab('settings')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white ml-auto" data-tab="settings">
-      <i class="fa-solid fa-gear"></i> Supabase & Config
+      <i class="fa-solid fa-gear"></i> Configurações
     </button>
   </nav>
 
-  <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
-    <section id="tab-dashboard" class="tab-content space-y-4">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Atletas no Elenco</p>
-          <p class="text-xl font-black text-slate-100 mt-1">26</p>
-          <span class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1 mt-1">
-            <i class="fa-solid fa-arrow-up"></i> Prontos para Treino
+  <main class="max-w-7xl mx-auto px-4 py-5 flex-1 w-full">
+    <!-- DASHBOARD -->
+    <section id="tab-dashboard" class="tab-content space-y-5">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl relative overflow-hidden">
+          <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider">Elenco Principal</p>
+          <p class="text-2xl font-black text-white mt-1">26 <span class="text-xs text-slate-400 font-normal">Atletas</span></p>
+          <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 mt-2">
+            <i class="fa-solid fa-circle-check"></i> 100% Prontos
           </span>
         </div>
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Microciclo Atual</p>
-          <p class="text-xl font-black text-amber-400 mt-1">MD-3</p>
-          <span class="text-[10px] text-amber-300 font-semibold mt-1 block">Velocidade / Força Especial</span>
+          <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider">Dia do Morfociclo</p>
+          <p class="text-2xl font-black text-amber-400 mt-1">MD-3</p>
+          <span class="text-[10px] text-amber-300 font-bold mt-2 block truncate">Velocidade & Tática Setorial</span>
         </div>
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Exercícios na Base</p>
-          <p id="dash-exercises-count" class="text-xl font-black text-emerald-400 mt-1">6</p>
-          <span class="text-[10px] text-slate-400 font-semibold mt-1 block">Metodologia Tática</span>
+          <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider">Exercícios na Base</p>
+          <p id="dash-exercises-count" class="text-2xl font-black text-emerald-400 mt-1">0</p>
+          <span class="text-[10px] text-slate-400 font-semibold mt-2 block">Sincronizados via Supabase</span>
         </div>
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Nuvem Supabase</p>
-          <p id="cloud-status" class="text-xs font-bold text-emerald-400 mt-2">Seguro / Ativo</p>
-          <span class="text-[9px] text-slate-500 block mt-0.5">Autenticação Ativa</span>
-        </div>
-      </div>
-      
-      <div class="bg-gradient-to-r from-emerald-950/60 to-slate-900 border border-emerald-500/30 rounded-2xl p-5 relative overflow-hidden">
-        <div class="relative z-10 space-y-2">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">
-            Metodologia Estruturada UEFA Pro
-          </span>
-          <h2 class="text-lg font-black text-slate-100">Montagem Completa de Sessão por IA ou Blocos</h2>
-          <p class="text-xs text-slate-300 max-w-xl">
-            Gere sessões completas divididas em 4 blocos metodológicos e guarde diretamente na nuvem privada de cada treinador.
+          <p class="text-[10px] text-slate-400 uppercase font-black tracking-wider">Status da Nuvem</p>
+          <p id="cloud-status" class="text-xs font-bold text-emerald-400 mt-3 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Supabase Ativo
           </p>
-          <div class="pt-2 flex flex-wrap gap-2">
-            <button onclick="switchTab('ai-generator')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
-              <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Sessão Completa
-            </button>
-            <button onclick="switchTab('tactical-board')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-700 transition-all flex items-center gap-2">
-              <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Abrir Prancheta 2D
-            </button>
-          </div>
+          <span class="text-[9px] text-slate-500 block mt-1">Autenticação Ativa</span>
         </div>
       </div>
-    </section>
-
-    <section id="tab-ai-generator" class="tab-content hidden space-y-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <div>
-            <h2 class="font-black text-sm text-slate-100 flex items-center gap-2">
-              <i class="fa-solid fa-robot text-amber-400"></i> Construtor de Sessão Completa (4 Blocos)
-            </h2>
-            <p class="text-[11px] text-slate-400">Geração de treino integrado com objetivos táticos, regras de provocação e carga</p>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Categoria / Escalão</label>
-            <select id="ai-category" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
-              <option value="Profissional">Equipa Principal / Profissional</option>
-              <option value="Sub-23">Sub-23 / Liga Revelação</option>
-              <option value="Sub-19">Sub-19 / Juniores A</option>
-              <option value="Sub-17">Sub-17 / Juvenis</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Momento do Jogo / Fase</label>
-            <select id="ai-phase" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
-              <option value="Organização Ofensiva (Construção Baixa)">Organização Ofensiva (Construção)</option>
-              <option value="Transição Defensiva (Pressão Pós-Perda)">Transição Defensiva (Pressão Pós-Perda)</option>
-              <option value="Organização Defensiva (Bloco Médio/Baixo)">Organização Defensiva (Bloco)</option>
-              <option value="Transição Ofensiva (Ataque Rápido)">Transição Ofensiva (Contra-Ataque)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Estrutura Numérica (Ex: 8v8+2)</label>
-            <input type="text" id="ai-players" value="8v8 + 2 Coringas" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
-          </div>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">Princípios Táticos / Instrução Específica</label>
-          <input type="text" id="ai-custom-prompt" placeholder="Ex: Criar superioridade numérica no corredor central com rotura do médio..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
-        </div>
-        <button id="btn-run-ai" onclick="generateProSession()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> GERAR SESSÃO METODOLÓGICA COMPLETA
-        </button>
-      </div>
-      <div id="ai-results-container" class="space-y-3">
-        <div class="text-center py-8 text-slate-500 text-xs border-2 border-dashed border-slate-800 rounded-2xl">
-          <i class="fa-solid fa-brain text-2xl mb-2 text-slate-700"></i>
-          <p>Defina os parâmetros metodológicos acima e clique em Gerar Sessão.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-tactical-board" class="tab-content hidden space-y-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
-          <div>
-            <h2 class="font-black text-sm text-slate-100 flex items-center gap-2">
-              <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Prancheta Tática UEFA 2D
-            </h2>
-            <p class="text-[11px] text-slate-400">Posicione jogadores, coringas, bola e desenhe linhas de passe</p>
-          </div>
-          <div class="flex flex-wrap gap-1.5 text-xs">
-            <button onclick="setBoardTool('blue_player')" class="tool-btn bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
-              <i class="fa-solid fa-user"></i> Equipa (Azul)
-            </button>
-            <button onclick="setBoardTool('red_player')" class="tool-btn bg-rose-600 text-white font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
-              <i class="fa-solid fa-user"></i> Oposição (Vermelho)
-            </button>
-            <button onclick="setBoardTool('yellow_player')" class="tool-btn bg-amber-500 text-slate-950 font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
-              <i class="fa-solid fa-user"></i> Coringa
-            </button>
-            <button onclick="setBoardTool('ball')" class="tool-btn bg-white text-slate-950 font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
-              <i class="fa-solid fa-futbol"></i> Bola
-            </button>
-            <button onclick="setBoardTool('line')" class="tool-btn bg-slate-700 text-slate-200 font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
-              <i class="fa-solid fa-route"></i> Setas
-            </button>
-            <button onclick="clearBoard()" class="bg-rose-950/80 hover:bg-rose-900 text-rose-300 font-bold px-2.5 py-1.5 rounded-lg text-[11px] border border-rose-800/60">
-              <i class="fa-solid fa-eraser"></i> Limpar
-            </button>
-          </div>
-        </div>
-        <div class="w-full flex justify-center bg-slate-950 p-2 rounded-xl border border-slate-800 overflow-hidden">
-          <canvas id="interactive-board" width="700" height="440" class="w-full max-w-full h-auto rounded-lg pitch-grid cursor-crosshair border border-emerald-500/30"></canvas>
-        </div>
-        <div class="flex justify-between items-center text-[11px] text-slate-400">
-          <span>Toque no relvado para posicionar elementos ou traçar linhas táticas.</span>
-          <button onclick="saveBoardToLibrary()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs">
-            <i class="fa-solid fa-floppy-disk"></i> Salvar na Biblioteca
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-library" class="tab-content hidden space-y-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 flex items-center justify-between gap-2">
-        <div class="relative flex-1">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
-          <input type="text" id="library-search" oninput="filterLibrary()" placeholder="Pesquisar exercício por título ou objetivo..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
-        </div>
-        <button onclick="openNewExerciseModal()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shrink-0">
-          <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Criar Exercício</span>
-        </button>
-      </div>
-      <div id="library-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-    </section>
-
-    <section id="tab-cart" class="tab-content hidden space-y-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <div>
-            <h2 class="font-black text-sm text-slate-100 flex items-center gap-2">
-              <i class="fa-solid fa-clipboard-check text-amber-400"></i> Ficha da Sessão de Treino Completa
-            </h2>
-            <p class="text-[11px] text-slate-400">Documento Oficial da Comissão Técnica para Impressão e Envio</p>
-          </div>
-          <span id="cart-total-time" class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/30">0 min total</span>
-        </div>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-            <label class="text-slate-500 text-[10px] block font-bold mb-1">Data da Sessão</label>
-            <input type="date" id="cart-date" class="bg-transparent text-slate-200 font-bold focus:outline-none w-full">
-          </div>
-          <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-            <label class="text-slate-500 text-[10px] block font-bold mb-1">Microciclo (Objetivo)</label>
-            <select id="cart-md" class="bg-transparent text-slate-200 font-bold focus:outline-none w-full">
-              <option value="MD-4">MD-4 (Força / Confrontos)</option>
-              <option value="MD-3" selected>MD-3 (Velocidade / Organização)</option>
-              <option value="MD-2">MD-2 (Ajustes Táticos / Bolas Paradas)</option>
-              <option value="MD-1">MD-1 (Ativação / Reativação)</option>
-            </select>
-          </div>
-        </div>
-        <div id="cart-items-container" class="space-y-2"></div>
-        <div class="pt-3 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button onclick="exportToPDF()" class="py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-file-pdf text-rose-400"></i> Exportar Relatório PDF
-          </button>
-          <button onclick="shareWhatsApp()" class="py-2.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 font-bold text-xs rounded-xl border border-emerald-500/40 flex items-center justify-center gap-2">
-            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Enviar Ficha WhatsApp
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABA DE CONFIGURAÇÕES / SUPABASE -->
-    <section id="tab-settings" class="tab-content hidden space-y-4">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
-        <div class="border-b border-slate-800 pb-3">
-          <h2 class="font-black text-sm text-slate-100 flex items-center gap-2">
-            <i class="fa-solid fa-database text-emerald-400"></i> Configuração do Supabase & Base de Dados
-          </h2>
-          <p class="text-[11px] text-slate-400">Insira a sua URL e Anon Key do seu projeto Supabase</p>
-        </div>
-        <div class="space-y-3 text-xs">
-          <div>
-            <label class="block font-bold text-slate-300 mb-1">Supabase URL</label>
-            <input type="text" id="cfg-url" placeholder="https://exemplo.supabase.co" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-300 mb-1">Supabase Anon Key (JWT)</label>
-            <textarea id="cfg-key" rows="4" placeholder="Cole aqui a sua chave anon / public..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500 font-mono text-[10px]"></textarea>
-          </div>
-          <button onclick="saveSupabaseConfig()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-floppy-disk"></i> GUARDAR CREDENCIAIS E REINICIAR
-          </button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 border-t border-slate-800 px-2 py-2 flex justify-around z-40 backdrop-blur-md">
-    <button onclick="switchTab('dashboard')" class="tab-btn-mb flex flex-col items-center gap-1 text-emerald-400" data-tab="dashboard">
-      <i class="fa-solid fa-chart-pie text-base"></i>
-      <span class="text-[9px] font-bold">Dash</span>
-    </button>
-    <button onclick="switchTab('ai-generator')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400" data-tab="ai-generator">
-      <i class="fa-solid fa-wand-magic-sparkles text-base text-amber-400"></i>
-      <span class="text-[9px] font-bold">Gerador</span>
-    </button>
-    <button onclick="switchTab('tactical-board')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400" data-tab="tactical-board">
-      <i class="fa-solid fa-chalkboard-user text-base text-emerald-400"></i>
-      <span class="text-[9px] font-bold">Prancheta</span>
-    </button>
-    <button onclick="switchTab('library')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400" data-tab="library">
-      <i class="fa-solid fa-layer-group text-base"></i>
-      <span class="text-[9px] font-bold">Exercícios</span>
-    </button>
-    <button onclick="switchTab('cart')" class="tab-btn-mb flex flex-col items-center gap-1 text-slate-400 relative" data-tab="cart">
-      <i class="fa-solid fa-file-pen text-base text-amber-400"></i>
-      <span class="text-[9px] font-bold">Ficha</span>
-    </button>
-  </nav>
-
-  <div id="modal-new-exercise" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-5 space-y-3 relative">
-      <button onclick="closeNewExerciseModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <h3 class="text-sm font-black text-slate-100">Criar Novo Exercício Metodológico</h3>
-      <div class="space-y-2 text-xs">
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">Título do Exercício</label>
-          <input type="text" id="new-ex-title" placeholder="Ex: Jogo de Posição 4v4 + 3 Coringas" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-200">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block font-bold text-slate-300 mb-1">Duração</label>
-            <input type="text" id="new-ex-duration" placeholder="20 min" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-200">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-300 mb-1">Dimensões do Espaço</label>
-            <input type="text" id="new-ex-space" placeholder="35x30m" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-200">
-          </div>
-        </div>
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">Objetivo Tático & Regras de Provocação</label>
-          <textarea id="new-ex-objective" rows="3" placeholder="Descreva o foco cognitivo e regras..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-200"></textarea>
-        </div>
-      </div>
-      <button onclick="saveManualExercise()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl">
-        Guardar Exercício
-      </button>
-    </div>
-  </div>
-
-  <div id="printable-area" class="hidden p-8">
-    <h1 class="text-xl font-bold mb-2">COACH TACTICS PRO - RELATÓRIO DE SESSÃO TÁTICA</h1>
-    <p class="text-sm mb-4">Comissão Técnica | Metodologia UEFA Pro</p>
-    <div id="print-content" class="space-y-4 text-xs"></div>
-  </div>
-</div>
-
-<script>
-// Carregar chaves salvas do LocalStorage ou usar padrões
-let supabaseUrl = localStorage.getItem('sb_url') || 'https://hpqnzffsjsbrphbhugye.supabase.co';
-let supabaseKey = localStorage.getItem('sb_key') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwcW56ZmZzanNicnBoYmh1g3llIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDA1MDgsImV4cCI6MjEwODgxNjUwOH0.V2jz8Gp2MMg8OaRZ4Ikw3-dcV1g68AOMDEN-FvTa540';
-let supabaseClient = null;
-
-if (window.supabase && supabaseUrl && supabaseKey) {
-  try {
-    supabaseClient = window.supabase.createClient(supabaseUrl.trim(), supabaseKey.trim());
-  } catch(e) { console.error('Erro ao iniciar Supabase', e); }
-}
-
-const defaultExercises = [
-  {
-    id: 'ex-1',
-    title: 'Bloco I: Ativação Neuromuscular & Rondo (Ataque Organizado)',
-    duration: '15 min',
-    space: '15x15m',
-    phase: 'Ativação',
-    category: 'Profissional',
-    objective: 'Ativação neuromuscular, circulação rápida de bola a 1-2 toques e reação imediata à perda.',
-    rules: 'Máximo 2 toques.'
-  },
-  {
-    id: 'ex-2',
-    title: 'Bloco II: Construção Baixa & Saída Pressionada (6v4 + Goleiro)',
-    duration: '25 min',
-    space: '40x45m',
-    phase: 'Organização Ofensiva',
-    category: 'Profissional',
-    objective: 'Atrair a pressão adversária em bloco alto e encontrar o homem livre no corredor central.',
-    rules: 'Guarda-redes participa como elemento de apoio frontal.'
-  }
-];
-
-let state = {
-  exercises: JSON.parse(localStorage.getItem('ct_exercises')) || defaultExercises,
-  cart: JSON.parse(localStorage.getItem('ct_cart')) || [],
-  currentUser: null
-};
-
-async function handleLogin() {
-  const email = document.getElementById('auth-email').value.trim();
-  const pass = document.getElementById('auth-password').value.trim();
-  const errEl = document.getElementById('auth-error');
-  const btn = document.getElementById('btn-login');
-  
-  errEl.classList.add('hidden');
-  if (!email || !pass) {
-    errEl.innerText = 'Preencha o e-mail e a palavra-passe.';
-    errEl.classList.remove('hidden');
-    return;
-  }
-
-  if (!supabaseClient) {
-    errEl.innerText = 'Erro: Chave ou URL do Supabase inválida. Vá em "Configurar Chaves Supabase" abaixo.';
-    errEl.classList.remove('hidden');
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> A ENTRAR...';
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-  
-  if (error) {
-    errEl.innerText = error.message;
-    errEl.classList.remove('hidden');
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> ENTRAR NO SISTEMA';
-  } else {
-    location.reload();
-  }
-}
-
-async function handleSignUp() {
-  const email = document.getElementById('auth-email').value.trim();
-  const pass = document.getElementById('auth-password').value.trim();
-  const errEl = document.getElementById('auth-error');
-  const btn = document.getElementById('btn-signup');
-  
-  errEl.classList.add('hidden');
-  if (!email || !pass) {
-    errEl.innerText = 'Insira um e-mail e uma palavra-passe válida.';
-    errEl.classList.remove('hidden');
-    return;
-  }
-
-  if (!supabaseClient) {
-    errEl.innerText = 'Erro: Chave ou URL do Supabase inválida. Vá em "Configurar Chaves Supabase" abaixo.';
-    errEl.classList.remove('hidden');
-    return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> A CRIAR CONTA...';
-
-  const { data, error } = await supabaseClient.auth.signUp({ email, password: pass });
-  
-  if (error) {
-    errEl.innerText = error.message;
-    errEl.classList.remove('hidden');
-    btn.disabled = false;
-    btn.innerHTML = 'Criar Nova Conta';
-  } else {
-    alert('Conta criada com sucesso! Faça login com os seus dados agora.');
-    btn.disabled = false;
-    btn.innerHTML = 'Criar Nova Conta';
-  }
-}
-
-async function checkAuthSession() {
-  if (!supabaseClient) return;
-  try {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-      state.currentUser = session.user;
-      document.getElementById('user-email-display').innerText = session.user.email;
-      document.getElementById('auth-modal').classList.add('hidden');
-      document.getElementById('app-container').classList.remove('hidden');
-      document.getElementById('app-container').classList.add('flex');
-      loadCloudExercises();
-    }
-  } catch(e) { console.log('Sessão não detetada', e); }
-}
-
-async function handleLogout() {
-  if (supabaseClient) await supabaseClient.auth.signOut();
-  location.reload();
-}
-
-function forceShowSettingsFromAuth() {
-  document.getElementById('auth-modal').classList.add('hidden');
-  document.getElementById('app-container').classList.remove('hidden');
-  document.getElementById('app-container').classList.add('flex');
-  switchTab('settings');
-}
-
-function saveSupabaseConfig() {
-  const url = document.getElementById('cfg-url').value.trim();
-  const key = document.getElementById('cfg-key').value.trim();
-  if (!url || !key) {
-    alert('Preencha ambos os campos corretamente.');
-    return;
-  }
-  localStorage.setItem('sb_url', url);
-  localStorage.setItem('sb_key', key);
-  alert('Credenciais atualizadas com sucesso! A recarregar o sistema...');
-  location.reload();
-}
-
-async function loadCloudExercises() {
-  if (!supabaseClient || !state.currentUser) return;
-  try {
-    const { data, error } = await supabaseClient
-      .from('treinos_coach')
-      .select('*')
-      .eq('user_email', state.currentUser.email);
       
-    if (data && data.length > 0) {
-      state.exercises = data.map(item => ({
-        id: item.id,
-        title: item.titulo,
-        duration: item.duracao,
-        space: item.espaco,
-        phase: item.fase,
-        objective: item.objetivo,
-        rules: item.regras
-      }));
-      renderLibrary();
-    }
-  } catch(e) { console.log('Erro ao carregar dados da nuvem', e); }
-}
-
-async function saveToCloud(ex) {
-  if (!supabaseClient || !state.currentUser) return;
-  try {
-    await supabaseClient.from('treinos_coach').insert([{
-      user_email: state.currentUser.email,
-      titulo: ex.title,
-      duracao: ex.duration,
-      espaco: ex.space,
-      fase: ex.phase || 'Geral',
-      objetivo: ex.objective,
-      regras: ex.rules || ''
-    }]);
-  } catch(e) { console.log('Erro ao salvar na nuvem', e); }
-}
-
-function switchTab(tabId) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-  document.getElementById('tab-' + tabId).classList.remove('hidden');
-  
-  document.querySelectorAll('.tab-btn-dk, .tab-btn-mb').forEach(btn => {
-    if (btn.dataset.tab === tabId) {
-      btn.classList.add('text-emerald-400');
-      btn.classList.remove('text-slate-400');
-    } else {
-      btn.classList.remove('text-emerald-400');
-      btn.classList.add('text-slate-400');
-    }
-  });
-
-  if (tabId === 'library') renderLibrary();
-  if (tabId === 'cart') renderCart();
-  if (tabId === 'tactical-board') initBoardCanvas();
-}
-
-function renderLibrary() {
-  const container = document.getElementById('library-container');
-  const search = document.getElementById('library-search').value.toLowerCase();
-  container.innerHTML = '';
-  
-  const filtered = state.exercises.filter(ex => 
-    ex.title.toLowerCase().includes(search) || 
-    ex.objective.toLowerCase().includes(search)
-  );
-
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="col-span-2 text-center py-8 text-slate-500 text-xs">Nenhum exercício encontrado.</div>';
-    return;
-  }
-
-  filtered.forEach(ex => {
-    const card = document.createElement('div');
-    card.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2.5 relative';
-    card.innerHTML = `
-      <div class="flex justify-between items-start">
-        <div>
-          <span class="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase">${ex.phase || 'Geral'}</span>
-          <h3 class="font-bold text-xs text-slate-100 mt-1">${ex.title}</h3>
-        </div>
-        <button onclick="addToCart('${ex.id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold p-2 rounded-xl text-xs">
-          <i class="fa-solid fa-plus"></i> Add
-        </button>
-      </div>
-      <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-300 bg-slate-950 p-2 rounded-xl border border-slate-800">
-        <span><strong>Duração:</strong> ${ex.duration}</span>
-        <span><strong>Espaço:</strong> ${ex.space}</span>
-      </div>
-      <p class="text-[11px] text-slate-400 bg-slate-950/50 p-2 rounded-xl border border-slate-800/50">${ex.objective}</p>
-    `;
-    container.appendChild(card);
-  });
-  document.getElementById('dash-exercises-count').innerText = state.exercises.length;
-}
-
-function filterLibrary() { renderLibrary(); }
-
-function addToCart(exId) {
-  const ex = state.exercises.find(e => e.id === exId);
-  if (!ex) return;
-  state.cart.push({ ...ex, cartId: Date.now() });
-  saveState();
-  renderCart();
-  alert('Exercício adicionado à Ficha da Sessão!');
-}
-
-function removeFromCart(cartId) {
-  state.cart = state.cart.filter(item => item.cartId !== cartId);
-  saveState();
-  renderCart();
-}
-
-function renderCart() {
-  const container = document.getElementById('cart-items-container');
-  if (state.cart.length === 0) {
-    container.innerHTML = `
-      <div class="text-center py-8 border-2 border-dashed border-slate-800 rounded-xl text-slate-500 text-xs">
-        Nenhum exercício na ficha. Adicione via Biblioteca ou Construtor de Sessão.
-      </div>`;
-    document.getElementById('cart-total-time').innerText = '0 min total';
-    return;
-  }
-
-  container.innerHTML = '';
-  let totalMin = 0;
-  state.cart.forEach((ex, idx) => {
-    const matchMin = ex.duration.match(/\d+/);
-    if (matchMin) totalMin += parseInt(matchMin[0]);
-
-    const item = document.createElement('div');
-    item.className = 'bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs';
-    item.innerHTML = `
-      <div class="flex items-center gap-2 overflow-hidden">
-        <span class="w-5 h-5 rounded-full bg-slate-800 text-emerald-400 font-bold text-[10px] flex items-center justify-center shrink-0">${idx + 1}</span>
-        <div class="truncate">
-          <p class="font-bold text-slate-200 text-[11px] truncate">${ex.title}</p>
-          <p class="text-[10px] text-slate-400">${ex.duration} | ${ex.space}</p>
+      <div class="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-slate-900 border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden glow-emerald">
+        <div class="relative z-10 space-y-3">
+          <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-500/30">
+            Metodologia Integrada UEFA Pro
+          </span>
+          <h2 class="text-xl md:text-2xl font-black text-white font-display uppercase tracking-wide">Construção Avançada de Sessão de Treino</h2>
+          <p class="text-xs text-slate-300 max-w-xl leading-relaxed">
+            Gere exercícios hiperestruturados contendo métricas de carga, organização espacial, regras de provocação e comportamentos táticos setoriais.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="switchTab('ai-generator')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs px-5 py-3 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2 uppercase tracking-wider">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Sessão Estruturada
+            </button>
+            <button onclick="switchTab('tactical-board')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-5 py-3 rounded-xl border border-slate-700 transition-all flex items-center gap-2 uppercase tracking-wider">
+              <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Prancheta Tática 2D
+            </button>
+          </div>
         </div>
       </div>
-      <button onclick="removeFromCart(${ex.cartId})" class="text-slate-500 hover:text-rose-400 p-1">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    `;
-    container.appendChild(item);
-  });
-  document.getElementById('cart-total-time').innerText = totalMin + ' min total';
-}
+    </section>
 
-function saveState() {
-  localStorage.setItem('ct_exercises', JSON.stringify(state.exercises));
-  localStorage.setItem('ct_cart', JSON.stringify(state.cart));
-}
-
-async function generateProSession() {
-  const category = document.getElementById('ai-category').value;
-  const phase = document.getElementById('ai-phase').value;
-  const players = document.getElementById('ai-players').value;
-  const custom = document.getElementById('ai-custom-prompt').value;
-  const resultsContainer = document.getElementById('ai-results-container');
-  const btn = document.getElementById('btn-run-ai');
-
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> A CONSTRUIR SESSÃO UEFA PRO...';
-
-  await new Promise(r => setTimeout(r, 600));
-
-  const sessionBlocks = [
-    {
-      title: `Bloco I: Ativação Neuromuscular & Rondo (${phase})`,
-      duration: '15 min',
-      space: '15x15m',
-      phase: 'Ativação',
-      category,
-      objective: `Ativar padrões de ${phase} com ${players}. Ênfase na qualidade de passe.`,
-      rules: 'Máximo 2 toques.'
-    },
-    {
-      title: `Bloco II: Exercício Setorial / Construção (${category})`,
-      duration: '25 min',
-      space: '40x35m',
-      phase: 'Organização Ofensiva',
-      category,
-      objective: `Treino focado em ${custom || phase}. Criação de linhas de passe.`,
-      rules: 'Progressão vertical rápida.'
-    },
-    {
-      title: `Bloco III: Jogo Reduzido / Condicionado Principal`,
-      duration: '30 min',
-      space: '55x45m',
-      phase: 'Transição Defensiva',
-      category,
-      objective: `Competição real com restrições espaciais para potenciar comportamento tático em ${phase}.`,
-      rules: 'Golos valem o dobro após recuperação.'
-    },
-    {
-      title: `Bloco IV: Compensação Física & Desativação`,
-      duration: '10 min',
-      space: 'Meio Campo',
-      phase: 'Recuperação',
-      category,
-      objective: 'Exercícios de mobilidade e retorno à calma.',
-      rules: 'Ritmo regenerativo.'
-    }
-  ];
-
-  resultsContainer.innerHTML = '';
-  for (let item of sessionBlocks) {
-    const id = 'pro-ex-' + Date.now() + '-' + Math.random();
-    const newEx = { id, ...item };
-    state.exercises.unshift(newEx);
-    await saveToCloud(newEx);
-    
-    const div = document.createElement('div');
-    div.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2';
-    div.innerHTML = `
-      <div class="flex justify-between items-start">
-        <div>
-          <span class="text-[9px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">Bloco UEFA Pro</span>
-          <h3 class="font-bold text-xs text-slate-100 mt-1">${item.title}</h3>
+    <!-- GERADOR DE SESSÃO PROFISSIONAL COM BLOCOS HIPERESTRUTURADOS -->
+    <section id="tab-ai-generator" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-5 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="font-black text-lg text-white flex items-center gap-2 font-display uppercase tracking-wide">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Construtor Metodológico UEFA Pro
+            </h2>
+            <p class="text-xs text-slate-400">Monte treinos detalhados com rigor tático, físico e cognitivo</p>
+          </div>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 font-extrabold px-3 py-1 rounded-full border border-amber-500/30 uppercase tracking-widest hidden sm:inline">
+            Metodologia Tática Ativa
+          </span>
         </div>
-        <button onclick="addToCart('${id}')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold p-2 rounded-xl text-xs">
-          <i class="fa-solid fa-plus"></i> Add
-        </button>
-      </div>
-      <p class="text-[11px] text-slate-300 bg-slate-950 p-2 rounded-xl border border-slate-800">${item.objective}</p>
-    `;
-    resultsContainer.appendChild(div);
-  }
-  saveState();
-  btn.disabled = false;
-  btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> GERAR SESSÃO METODOLÓGICA COMPLETA';
-}
 
-let boardCanvas, boardCtx, currentTool = 'blue_player', isDrawing = false, startX, startY;
-function initBoardCanvas() {
-  boardCanvas = document.getElementById('interactive-board');
-  if (!boardCanvas) return;
-  boardCtx = boardCanvas.getContext('2d');
-  boardCanvas.onmousedown = handleBoardStart;
-  boardCanvas.onmousemove = handleBoardMove;
-  boardCanvas.onmouseup = handleBoardEnd;
-  
-  boardCanvas.addEventListener('touchstart', (e) => {
-    const touch = e.touches[0];
-    handleBoardStart({ clientX: touch.clientX, clientY: touch.clientY });
-  });
-  boardCanvas.addEventListener('touchmove', (e) => {
-    const touch = e.touches[0];
-    handleBoardMove({ clientX: touch.clientX, clientY: touch.clientY });
-  });
-  boardCanvas.addEventListener('touchend', handleBoardEnd);
-  drawBasePitch();
-}
-
-function drawBasePitch() {
-  const w = boardCanvas.width;
-  const h = boardCanvas.height;
-  boardCtx.fillStyle = '#064e3b';
-  boardCtx.fillRect(0, 0, w, h);
-  boardCtx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-  boardCtx.lineWidth = 2;
-  boardCtx.strokeRect(15, 15, w - 30, h - 30);
-  
-  boardCtx.beginPath();
-  boardCtx.moveTo(w/2, 15);
-  boardCtx.lineTo(w/2, h - 15);
-  boardCtx.stroke();
-  
-  boardCtx.beginPath();
-  boardCtx.arc(w/2, h/2, 40, 0, Math.PI * 2);
-  boardCtx.stroke();
-}
-
-function setBoardTool(tool) { currentTool = tool; }
-function clearBoard() { drawBasePitch(); }
-
-function handleBoardStart(e) {
-  const rect = boardCanvas.getBoundingClientRect();
-  startX = (e.clientX - rect.left) * (boardCanvas.width / rect.width);
-  startY = (e.clientY - rect.top) * (boardCanvas.height / rect.height);
-  isDrawing = true;
-  
-  if (currentTool === 'blue_player') drawToken(startX, startY, '#38bdf8', 'A');
-  else if (currentTool === 'red_player') drawToken(startX, startY, '#f43f5e', 'D');
-  else if (currentTool === 'yellow_player') drawToken(startX, startY, '#fbbf24', 'C');
-  else if (currentTool === 'ball') drawToken(startX, startY, '#ffffff', 'B', 6);
-}
-
-function handleBoardMove(e) {
-  if (!isDrawing || currentTool !== 'line') return;
-  const rect = boardCanvas.getBoundingClientRect();
-  const x = (e.clientX - rect.left) * (boardCanvas.width / rect.width);
-  const y = (e.clientY - rect.top) * (boardCanvas.height / rect.height);
-  
-  boardCtx.strokeStyle = '#fbbf24';
-  boardCtx.lineWidth = 2.5;
-  boardCtx.beginPath();
-  boardCtx.moveTo(startX, startY);
-  boardCtx.lineTo(x, y);
-  boardCtx.stroke();
-  startX = x;
-  startY = y;
-}
-
-function handleBoardEnd() { isDrawing = false; }
-
-function drawToken(x, y, color, label, radius = 12) {
-  boardCtx.fillStyle = color;
-  boardCtx.beginPath();
-  boardCtx.arc(x, y, radius, 0, Math.PI * 2);
-  boardCtx.fill();
-  boardCtx.strokeStyle = '#ffffff';
-  boardCtx.lineWidth = 2;
-  boardCtx.stroke();
-}
-
-async function saveBoardToLibrary() {
-  const id = 'ex-board-' + Date.now();
-  const newEx = {
-    id,
-    title: 'Esquema Tático Desenhado (Prancheta 2D)',
-    duration: '20 min',
-    space: 'Espaço Regulamentar',
-    phase: 'Organização Tática',
-    objective: 'Exercício desenhado manualmente pela equipa técnica na prancheta interativa.',
-    rules: 'Cumprir rigorosamente as rotas e dinâmicas estipuladas.'
-  };
-  state.exercises.unshift(newEx);
-  await saveToCloud(newEx);
-  saveState();
-  alert('Prancheta guardada com sucesso na Biblioteca!');
-}
-
-function openNewExerciseModal() { document.getElementById('modal-new-exercise').classList.remove('hidden'); }
-function closeNewExerciseModal() { document.getElementById('modal-new-exercise').classList.add('hidden'); }
-
-async function saveManualExercise() {
-  const title = document.getElementById('new-ex-title').value;
-  const duration = document.getElementById('new-ex-duration').value || '20 min';
-  const space = document.getElementById('new-ex-space').value || '35x30m';
-  const objective = document.getElementById('new-ex-objective').value;
-  
-  if (!title) { alert('Insira o título do exercício.'); return; }
-  
-  const newEx = {
-    id: 'ex-man-' + Date.now(),
-    title, duration, space, phase: 'Geral', objective, rules: ''
-  };
-  state.exercises.unshift(newEx);
-  await saveToCloud(newEx);
-  saveState();
-  closeNewExerciseModal();
-  renderLibrary();
-}
-
-function exportToPDF() {
-  if (state.cart.length === 0) { alert('A ficha de treino está vazia!'); return; }
-  const printContent = document.getElementById('print-content');
-  printContent.innerHTML = '';
-  state.cart.forEach((ex, i) => {
-    printContent.innerHTML += `
-      <div style="border:1px solid #ccc; padding:12px; margin-bottom:12px; border-radius:8px;">
-        <h3><strong>Bloco ${i+1}: ${ex.title}</strong> (${ex.duration})</h3>
-        <p><strong>Espaço / Dimensões:</strong> ${ex.space}</p>
-        <p><strong>Objetivo Tático & Regras:</strong> ${ex.objective}</p>
-      </div>`;
-  });
-  window.print();
-}
-
-function shareWhatsApp() {
-  if (state.cart.length === 0) { alert('A ficha de treino está vazia!'); return; }
-  let text = '*COACH TACTICS PRO - RELATÓRIO DE SESSÃO*\n\n';
-  state.cart.forEach((ex, i) => {
-    text += `*Bloco ${i+1}: ${ex.title}* (${ex.duration})\n• Espaço: ${ex.space}\n• Objetivo: ${ex.objective}\n\n`;
-  });
-  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('cart-date').valueAsDate = new Date();
-  
-  // Preencher inputs da aba de configurações com os valores atuais
-  document.getElementById('cfg-url').value = supabaseUrl;
-  document.getElementById('cfg-key').value = supabaseKey;
-
-  checkAuthSession();
-});
-</script>
-</body>
-</html>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3.5">
+          <div>
+            <label class="block text-xs font-
