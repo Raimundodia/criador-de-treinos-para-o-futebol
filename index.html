@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Coach Tactics Pro - MVP Completo</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome 6 Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts Inter -->
+<link href="https://fonts.googleapis.com/css?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        pitch: {
+          DEFAULT: '#10B981',
+          dark: '#059669',
+          light: '#34D399',
+          bg: '#0A1912'
+        },
+        gold: {
+          DEFAULT: '#F59E0B',
+          light: '#FBBF24'
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+* { touch-action: manipulation; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #10B981; }
+.pitch-grid {
+  background-color: #064e3b;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(16, 185, 129, 0.08) 25px, rgba(16, 185, 129, 0.08) 50px);
+}
+@media print {
+  .no-print { display: none !important; }
+  #printable-area { display: block !important; background: #fff !important; color: #000 !important; }
+  body { background: #fff !important; color: #000 !important; }
+}
+</style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col pb-20 md:pb-0 antialiased selection:bg-emerald-500 selection:text-white">
+
+<!-- HEADER -->
+<header class="border-b border-slate-800 bg-slate-900/95 sticky top-0 z-40 backdrop-blur-md">
+  <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 font-black text-base shadow-md shadow-emerald-500/20">
+        <i class="fa-solid fa-futbol"></i>
+      </div>
+      <div>
+        <div class="flex items-center space-x-1.5">
+          <span class="font-black text-base tracking-tight bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">Coach Tactics</span>
+          <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">MVP</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button onclick="switchTab('cart')" class="relative p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+        <i class="fa-solid fa-clipboard-list text-emerald-400"></i>
+        <span id="header-cart-count" class="absolute -top-1 -right-1 bg-amber-500 text-slate-950 font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+      </button>
+      <div class="h-4 w-[1px] bg-slate-800"></div>
+      <div class="flex items-center space-x-1 text-xs text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-[11px] font-semibold hidden sm:inline">On-line</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- NAVEGAÇÃO DESKTOP -->
+<nav class="hidden md:flex border-b border-slate-800 bg-slate-900/60 px-6 py-2 gap-2 text-xs font-semibold max-w-7xl mx-auto w-full">
+  <button onclick="switchTab('dashboard')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 bg-slate-800 text-emerald-400" data-tab="dashboard">
+    <i class="fa-solid fa-chart-pie"></i> Dashboard
+  </button>
+  <button onclick="switchTab('ai-generator')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="ai-generator">
+    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Gerador IA
+  </button>
+  <button onclick="switchTab('tactical-board')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="tactical-board">
+    <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Prancheta 2D
+  </button>
+  <button onclick="switchTab('library')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="library">
+    <i class="fa-solid fa-layer-group"></i> Exercícios
+  </button>
+  <button onclick="switchTab('cart')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white" data-tab="cart">
+    <i class="fa-solid fa-file-pen text-amber-400"></i> Ficha da Sessão
+  </button>
+  <button onclick="switchTab('settings')" class="tab-btn-dk px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-white ml-auto" data-tab="settings">
+    <i class="fa-solid fa-gear"></i> Configurações
+  </button>
+</nav>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
+  <!-- DASHBOARD -->
+  <section id="tab-dashboard" class="tab-content space-y-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Atletas / Alunos</p>
+        <p id="dash-athletes-count" class="text-xl font-black text-slate-100 mt-1">24</p>
+        <span class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1 mt-1">
+          <i class="fa-solid fa-arrow-up"></i> Elenco Ativo
+        </span>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Sessões do Mês</p>
+        <p id="dash-sessions-count" class="text-xl font-black text-amber-400 mt-1">12</p>
+        <span class="text-[10px] text-amber-300 font-semibold mt-1 block">Microciclo MD-3</span>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Exercícios Salvos</p>
+        <p id="dash-exercises-count" class="text-xl font-black text-emerald-400 mt-1">6</p>
+        <span class="text-[10px] text-slate-400 font-semibold mt-1 block">Na Biblioteca</span>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Status da IA</p>
+        <p id="dash-ai-status" class="text-xs font-bold text-emerald-400 mt-2">Pronta / Integrada</p>
+        <span class="text-[9px] text-slate-500 block mt-0.5">Google Gemini API</span>
+      </div>
+    </div>
+    
+    <div class="bg-gradient-to-r from-emerald-950/60 to-slate-900 border border-emerald-500/30 rounded-2xl p-5 relative overflow-hidden">
+      <div class="relative z-10 space-y-2">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">
+          Ação Rápida no Gramado
+        </span>
+        <h2 class="text-lg font-black text-slate-100">Montar Treino de Hoje com Inteligência Artificial</h2>
+        <p class="text-xs text-slate-300 max-w-xl">
+          Escolha a fase do jogo e deixe a IA gerar a sequência de aquecimento, trabalho tático e jogo reduzido em instantes.
+        </p>
+        <div class="pt-2 flex flex-wrap gap-2">
+          <button onclick="switchTab('ai-generator')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Abrir Gerador IA
+          </button>
+          <button onclick="switchTab('tactical-board')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-700 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Desenhar na Prancheta
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GERADOR IA -->
+  <section id="tab-ai-generator" class="tab-content hidden space-y-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h2 class="font-black text-sm text-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-robot text-amber-400"></i> Assistente Tático IA
+          </h2>
+          <p class="text-[11px] text-slate-400">Geração de Treinos Personalizados via Gemini API</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Categoria / Faixa Etária</label>
+          <select id="ai-category" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+            <option value="Profissional">Profissional / Principal</option>
+            <option value="Sub-20">Sub-20 / Junior</option>
+            <option value="Sub-17">Sub-17 / Juvenil</option>
+            <option value="Sub-15">Sub-15 / Infantil</option>
+            <option value="Sub-13">Sub-13 / Escolinha</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Fase do Jogo Prioritária</label>
+          <select id="ai-phase" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+            <option value="Ataque Organizado">Ataque Organizado (Construção)</option>
+            <option value="Transição Defensiva">Transição Defensiva (Pressão Pós-Perda)</option>
+            <option value="Defesa Organizada">Defesa Organizada (Bloco Baixo/Médio)</option>
+            <option value="Transição Ofensiva">Transição Ofensiva (Contra-Ataque)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">N° de Jogadores no Campo</label>
+          <input type="number" id="ai-players" value="18" min="6" max="30" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-slate-300 mb-1">Instruções Adicionais (Opcional)</label>
+        <input type="text" id="ai-custom-prompt" placeholder="Ex: Foco em triangulações com laterais ultrapassando..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+      </div>
+      <button id="btn-run-ai" onclick="generateAiExercises()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> GERAR TREINO COMPLETO COM IA
+      </button>
+    </div>
+    <div id="ai-results-container" class="space-y-3">
+      <div class="text-center py-8 text-slate-500 text-xs border-2 border-dashed border-slate-800 rounded-2xl">
+        <i class="fa-solid fa-brain text-2xl mb-2 text-slate-700"></i>
+        <p>Defina os parâmetros acima e clique em Gerar para receber o plano de treino.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRANCHETA TÁTICA -->
+  <section id="tab-tactical-board" class="tab-content hidden space-y-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div>
+          <h2 class="font-black text-sm text-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Prancheta Tática Touch
+          </h2>
+          <p class="text-[11px] text-slate-400">Desenhe esquemas táticos e movimentações com o dedo</p>
+        </div>
+        <div class="flex flex-wrap gap-1.5 text-xs">
+          <button onclick="setBoardTool('blue_player')" class="tool-btn bg-sky-600 text-white font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
+            <i class="fa-solid fa-user"></i> Atacante
+          </button>
+          <button onclick="setBoardTool('red_player')" class="tool-btn bg-rose-600 text-white font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
+            <i class="fa-solid fa-user"></i> Defensor
+          </button>
+          <button onclick="setBoardTool('ball')" class="tool-btn bg-amber-400 text-slate-950 font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-1">
+            <i class="fa-solid fa-futbol"></i> Bola
+          </button>
+          <button onclick="setBoardTool('line')" class="tool-btn bg-slate-700 text-slate-200 font-bold px-2.5 py-1.5 rounded-lg text-[11px] flex items-center gap-
